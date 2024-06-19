@@ -57,8 +57,8 @@ struct MemArchitectureSpecTypeLPDDR5
     uint64_t burstLength;
     uint64_t dataRate;
     uint64_t width;
-    uint64_t per2BankOffset; // TODO used in DRAMsys
-    bool     WCKalwaysOn; // TODO used in DRAMPower
+    uint64_t per2BankOffset;
+    bool     WCKalwaysOn;
     std::optional<uint64_t> maxBurstLength;
 };
 
@@ -87,16 +87,14 @@ struct MemTimingSpecTypeLPDDR5
     uint64_t    RFCab;
     uint64_t    RFCpb;
     uint64_t    RAS;
-    uint64_t    RP;     // TODO used in DRAMPower
-    uint64_t    RPab;   // TODO used in DRAMSys
-    uint64_t    RPpb;   // TODO used in DRAMSys
+    uint64_t    RPab;
+    uint64_t    RPpb;
     uint64_t    RCpb;
     uint64_t    RCab;
     uint64_t    PPD;
-    uint64_t    RTP;    // TODO used in DRAMPower
-    uint64_t    RCD;    // TODO used in DRAMSys
-    uint64_t    RCD_L;  // TODO used in DRAMSys
-    uint64_t    RCD_S;  // TODO used in DRAMSys
+    uint64_t    RCD;
+    uint64_t    RCD_L;  // TODO
+    uint64_t    RCD_S;  // TODO
     uint64_t    FAW;
     uint64_t    RRD;
     uint64_t    RL;
@@ -114,8 +112,8 @@ struct MemTimingSpecTypeLPDDR5
     uint64_t    BL_n_S_32;
     uint64_t    WTR_L;
     uint64_t    WTR_S;
-    uint64_t    WCK2DQO; // TODO
-    uint64_t    WCKtoCK; // TODO used in DRAMPower
+    uint64_t    WCK2DQO;
+    uint64_t    WCKtoCK;
     uint64_t    pbR2act;
     uint64_t    pbR2pbR;
 };
