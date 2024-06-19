@@ -38,6 +38,7 @@
 
 #include <string_view>
 #include <string>
+#include <optional>
 #include "DRAMUtils/util/json.h"
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
@@ -46,6 +47,11 @@ namespace DRAMUtils::Config {
 
 struct MemArchitectureSpecTypeDDR4
 {
+    uint64_t nbrOfChannels;
+    uint64_t nbrOfDevices;
+    uint64_t nbrOfRanks;
+    uint64_t nbrOfBanks;
+    uint64_t nbrOfBankGroups;
     uint64_t nbrOfRows;
     uint64_t nbrOfColumns;
     uint64_t burstLength;
@@ -53,9 +59,9 @@ struct MemArchitectureSpecTypeDDR4
     uint64_t width;
     std::optional<uint64_t> maxBurstLength;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR4, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR4, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
 
-struct MemTimingSpecDDR4
+struct MemTimingSpecTypeDDR4
 {
     double      tCK;
     uint64_t    CKE;
@@ -73,8 +79,7 @@ struct MemTimingSpecDDR4
     uint64_t    XS;
     uint64_t    REFM;
     uint64_t    REFI;
-    uint64_t    RFC;    // TODO different in DRAMSys DRAMPower
-    uint64_t    RFC1;   // TODO different in DRAMSys DRAMPower
+    uint64_t    RFC1;
     uint64_t    RFC2;
     uint64_t    RFC4;
     uint64_t    RP;
@@ -94,9 +99,9 @@ struct MemTimingSpecDDR4
     uint64_t    REFPDEN;
     uint64_t    RTRS;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecDDR4, tCK, CKE, CKESR, RAS, RC, RCD, RL, RTP, WL, WPRE, WR, XP, XS, REFM, REFI, RFC, RFC1, RFC2, RFC4, RP, DQSCK, CCD_S, CCD_L, FAW, RRD_S, RRD_L, WTR_S, WTR_L, XPDLL, XSDLL, AL, ACTPDEN, PRPDEN, REFPDEN, RTRS)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeDDR4, tCK, CKE, CKESR, RAS, RC, RCD, RL, RPRE, RTP, WL, WPRE, WR, XP, XS, REFM, REFI, RFC1, RFC2, RFC4, RP, DQSCK, CCD_S, CCD_L, FAW, RRD_S, RRD_L, WTR_S, WTR_L, XPDLL, XSDLL, AL, ACTPDEN, PRPDEN, REFPDEN, RTRS)
 
-struct MemPowerSpecDDR4
+struct MemPowerSpecTypeDDR4
 {
     double vdd;
     double idd0;
@@ -126,32 +131,75 @@ struct MemPowerSpecDDR4
     double idd5F2;
     double ipp5F2;
     
-    // refreshMode!=1 && refreshMode!=2
+    // refreshMode==4
     double idd5F4;
     double ipp5F4;
+
+    double vddq;
     
     std::optional<double> iBeta;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecDDR4, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp6, ipp2p, ipp3p, idd5B, ipp5B, idd5F2, ipp5F2, idd5F4, ipp5F4, iBeta)
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeDDR4, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp6, ipp2p, ipp3p, idd5B, ipp5B, idd5F2, ipp5F2, idd5F4, ipp5F4, vddq, iBeta)
 
-struct BankWiseSpecDDR4
+struct BankWiseSpecTypeDDR4
 {
-    double factRho;
+    std::optional<double> factRho;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecDDR4, factRho)
+NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeDDR4, factRho)
+
+// Pre and Postamble
+// Total number of zero cycles relative to tCK (one cycle = tCK) for example, if tCK = 1ns, and read_zeroes = 2.5, then the total time is 2.5ns
+struct PrePostambleTypeDDR4
+{
+    // Total number of zero/one cycles per DQs differential pair
+    // relative to tCK (one cycle = tCK)
+    // for example, if tCK = 1ns, and read_zeroes = 2.5, then the total time is 2.5ns
+    double read_zeroes;
+    double write_zeroes;
+    double read_ones;
+    double write_ones;
+
+    // Total number of zero to one and one to zero transitions per DQs differential pair
+    uint64_t read_zeroes_to_ones;
+    uint64_t write_zeroes_to_ones;
+    uint64_t write_ones_to_zeroes;
+    uint64_t read_ones_to_zeroes;
+
+    // Minimum time interval between two consecutive read/write commands to prevent merging or seamless transition.
+    uint64_t readMinTccd;
+    uint64_t writeMinTccd;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(PrePostambleTypeDDR4, read_zeroes, write_zeroes, read_ones, write_ones, read_zeroes_to_ones, write_zeroes_to_ones, write_ones_to_zeroes, read_ones_to_zeroes, readMinTccd, writeMinTccd)
+
+struct MemImpedanceSpecTypeDDR4 {
+    double C_total_ck;
+    double C_total_cb;
+    double C_total_rb;
+    double C_total_wb;
+    double C_total_dqs;
+
+    double R_eq_ck;
+    double R_eq_cb;
+    double R_eq_rb;
+    double R_eq_wb;
+    double R_eq_dqs;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeDDR4, C_total_ck, C_total_cb, C_total_rb, C_total_wb, C_total_dqs, R_eq_ck, R_eq_cb, R_eq_rb, R_eq_wb, R_eq_dqs)
 
 struct MemSpecDDR4 : BaseMemSpec
 {
     static constexpr inline const std::string_view id = "DDR4";
     std::string memoryId;
     
-    uint64_t RefreshMode = 1;
+    uint64_t RefreshMode;
     MemArchitectureSpecTypeDDR4 memarchitecturespec;
-    MemPowerSpecDDR4 mempowerspec;
-    MemTimingSpecDDR4 memtimingspec;
-    BankWiseSpecDDR4 bankwisespec;
+    MemPowerSpecTypeDDR4 mempowerspec;
+    MemTimingSpecTypeDDR4 memtimingspec;
+    std::optional<BankWiseSpecTypeDDR4> bankwisespec;
+    MemImpedanceSpecTypeDDR4 memimpedancespec;
+    PrePostambleTypeDDR4 prepostamble;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR4, memoryId, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR4, memoryId, RefreshMode, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec, prepostamble)
 
 } // namespace DRAMUtils::Config
 
