@@ -59,6 +59,7 @@ struct MemArchitectureSpecTypeLPDDR4
     uint64_t width;
     std::optional<uint64_t> maxBurstLength;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeLPDDR4, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
 
 struct MemImpedanceSpecTypeLPDDR4 {
     double C_total_ck;
@@ -73,6 +74,7 @@ struct MemImpedanceSpecTypeLPDDR4 {
     double R_eq_wb;
     double R_eq_dqs;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR4, C_total_ck, C_total_cb, C_total_rb, C_total_wb, C_total_dqs, R_eq_ck, R_eq_cb, R_eq_rb, R_eq_wb, R_eq_dqs)
 
 struct MemTimingSpecTypeLPDDR4
 {
@@ -113,6 +115,7 @@ struct MemTimingSpecTypeLPDDR4
     uint64_t    XSR;
     uint64_t    RTRS;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR4, tCK, CKE, ESCKE, CMDCKE, RAS, RCD, RL, REFM, REFI, REFIpb, RFCpb, RFCab, RPpb, RPab, RCpb, RCab, PPD, RCD, FAW, RRD, CCD, CCDMW, RL, RPST, DQSCK, RTP, WL, DQSS, DQS2DQ, WR, WPRE, WTR, XP, SR, XSR, RTRS)
 
 enum class pasrModesType {
     PASR_0,
@@ -142,6 +145,7 @@ struct BankWiseSpecTypeLPDDR4
     std::optional<double>           factSigma;
     std::optional<pasrModesType>    pasrMode;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeLPDDR4, factRho, factSigma, pasrMode)
 
 struct MemPowerSpecTypeLPDDR4
 {
@@ -171,6 +175,7 @@ struct MemPowerSpecTypeLPDDR4
 
     double vddq;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR4, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd2p1, idd3p1, vdd2, idd02, idd2n2, idd3n2, idd4r2, idd4w2, idd52, idd5pb2, idd62, idd2p2, idd3p2, vddq)
 
 struct MemSpecLPDDR4 : BaseMemSpec
 {
@@ -183,7 +188,7 @@ struct MemSpecLPDDR4 : BaseMemSpec
     MemImpedanceSpecTypeLPDDR4 memimpedancespec;
     std::optional<BankWiseSpecTypeLPDDR4> bankwisespec;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecLPDDR4, memoryId, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecLPDDR4, memoryId, memarchitecturespec, mempowerspec, memtimingspec, memimpedancespec, bankwisespec)
 
 } // namespace DRAMUtils::Config
 

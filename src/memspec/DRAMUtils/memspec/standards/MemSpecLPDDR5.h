@@ -61,6 +61,7 @@ struct MemArchitectureSpecTypeLPDDR5
     bool     WCKalwaysOn;
     std::optional<uint64_t> maxBurstLength;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeLPDDR5, nbrOfDevices, nbrOfChannels, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, per2BankOffset, WCKalwaysOn, maxBurstLength)
 
 struct MemImpedanceSpecTypeLPDDR5
 {
@@ -78,6 +79,7 @@ struct MemImpedanceSpecTypeLPDDR5
     double R_eq_rb;
     double R_eq_wb;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR5, C_total_cb, C_total_ck, C_total_wck, C_total_dqs, C_total_rb, C_total_wb, R_eq_cb, R_eq_ck, R_eq_wck, R_eq_dqs, R_eq_rb, R_eq_wb)
 
 struct MemTimingSpecTypeLPDDR5
 {
@@ -117,11 +119,13 @@ struct MemTimingSpecTypeLPDDR5
     uint64_t    pbR2act;
     uint64_t    pbR2pbR;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR5, tCK, REFI, REFIpb, RFCab, RFCpb, RAS, RPab, RPpb, RCpb, RCab, PPD, RCD, RCD_L, RCD_S, FAW, RRD, RL, RBTP, WL, WR, RTRS, BL_n_min_16, BL_n_max_16, BL_n_L_16, BL_n_S_16, BL_n_min_32, BL_n_max_32, BL_n_L_32, BL_n_S_32, WTR_L, WTR_S, WCK2DQO, WCKtoCK, pbR2act, pbR2pbR)
 
 struct BankWiseSpecTypeLPDDR5
 {
     std::optional<double>   factRho;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeLPDDR5, factRho)
 
 struct MemPowerSpecTypeLPDDR5
 {
@@ -168,6 +172,7 @@ struct MemPowerSpecTypeLPDDR5
 
     std::optional<double> iBeta;
 };
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR5, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd6ds1, idd2p1, idd3p1, vdd2h, idd02h, idd2n2h, idd3n2h, idd4r2h, idd4w2h, idd52h, idd5pb2h, idd62h, idd6ds2h, idd2p2h, idd3p2h, vdd2l, idd02l, idd2n2l, idd3n2l, idd4r2l, idd4w2l, idd52l, idd5pb2l, idd62l, idd6ds2l, idd2p2l, idd3p2l, vddq, iBeta)
 
 struct MemSpecLPDDR5 : BaseMemSpec
 {
