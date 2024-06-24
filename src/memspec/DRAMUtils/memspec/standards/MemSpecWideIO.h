@@ -44,13 +44,54 @@
 
 namespace DRAMUtils::Config {
 
+struct MemArchitectureSpecTypeWideIO
+{
+    uint64_t nbrOfRows;
+    uint64_t nbrOfColumns;
+    uint64_t burstLength;
+    std::optional<uint64_t> maxBurstLength;
+    uint64_t dataRate;
+    uint64_t width;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeWideIO, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width)
+
+struct MemTimingSpecTypeWideIO
+{
+    double      tCK;
+    uint64_t    CKE;
+    uint64_t    CKESR;
+    uint64_t    RAS;
+    uint64_t    RC;
+    uint64_t    RCD;
+    uint64_t    RL;
+    uint64_t    WL;
+    uint64_t    WR;
+    uint64_t    XP;
+    uint64_t    XSR;
+    uint64_t    REFI;
+    uint64_t    RFC;
+    uint64_t    RP;
+    uint64_t    DQSCK;
+    uint64_t    AC;
+    uint64_t    CCD_R;
+    uint64_t    CCD_W;
+    uint64_t    RRD;
+    uint64_t    TAW;
+    uint64_t    WTR;
+    uint64_t    RTRS;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeWideIO, tCK, CKE, CKESR, RAS, RC, RCD, RL, WL, WR, XP, XSR, REFI, RFC, RP, DQSCK, AC, CCD_R, CCD_W, RRD, TAW, WTR, RTRS)
+
 struct MemSpecWideIO : BaseMemSpec
 {
     static constexpr inline const std::string_view id = "WIDEIO_SDR";
     std::string memoryId;
 
+    MemArchitectureSpecTypeWideIO memarchitecturespec;
+    MemTimingSpecTypeWideIO memtimingspec;
+
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecWideIO, memoryId)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecWideIO, memoryId, memarchitecturespec, memtimingspec)
 
 } // namespace DRAMUtils::Config
 

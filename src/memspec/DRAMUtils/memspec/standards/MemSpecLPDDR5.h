@@ -170,9 +170,11 @@ struct MemPowerSpecTypeLPDDR5
 
     double vddq;
 
-    std::optional<double> iBeta;
+    std::optional<double> iBeta_vdd1;
+    std::optional<double> iBeta_vdd2h;
+    std::optional<double> iBeta_vdd2l;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR5, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd6ds1, idd2p1, idd3p1, vdd2h, idd02h, idd2n2h, idd3n2h, idd4r2h, idd4w2h, idd52h, idd5pb2h, idd62h, idd6ds2h, idd2p2h, idd3p2h, vdd2l, idd02l, idd2n2l, idd3n2l, idd4r2l, idd4w2l, idd52l, idd5pb2l, idd62l, idd6ds2l, idd2p2l, idd3p2l, vddq, iBeta)
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR5, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd6ds1, idd2p1, idd3p1, vdd2h, idd02h, idd2n2h, idd3n2h, idd4r2h, idd4w2h, idd52h, idd5pb2h, idd62h, idd6ds2h, idd2p2h, idd3p2h, vdd2l, idd02l, idd2n2l, idd3n2l, idd4r2l, idd4w2l, idd52l, idd5pb2l, idd62l, idd6ds2l, idd2p2l, idd3p2l, vddq, iBeta_vdd1, iBeta_vdd2h, iBeta_vdd2l)
 
 struct MemSpecLPDDR5 : BaseMemSpec
 {

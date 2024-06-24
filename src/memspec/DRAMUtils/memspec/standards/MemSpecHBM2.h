@@ -44,13 +44,65 @@
 
 namespace DRAMUtils::Config {
 
+struct MemArchitectureSpecTypeHBM2
+{
+    uint64_t nbrOfRows;
+    uint64_t nbrOfColumns;
+    uint64_t burstLength;
+    std::optional<uint64_t> maxBurstLength;
+    uint64_t dataRate;
+    uint64_t width;
+    uint64_t nbrOfChannels;
+    uint64_t nbrOfPseudoChannels;
+    uint64_t nbrOfDevices;
+    uint64_t nbrOfBanks;
+    uint64_t nbrOfBankGroups;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeHBM2, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, nbrOfChannels, nbrOfPseudoChannels, nbrOfDevices, nbrOfBanks, nbrOfBankGroups)
+
+struct MemTimingSpecTypeHBM2
+{
+    double      tCK;
+    uint64_t    DQSCK;
+    uint64_t    RC;
+    uint64_t    RAS;
+    uint64_t    RCDRD;
+    uint64_t    RCDWR;
+    uint64_t    RRDL;
+    uint64_t    RRDS;
+    uint64_t    FAW;
+    uint64_t    RTP;
+    uint64_t    RP;
+    uint64_t    RL;
+    uint64_t    WL;
+    uint64_t    PL;
+    uint64_t    WR;
+    uint64_t    CCDL;
+    uint64_t    CCDS;
+    uint64_t    WTRL;
+    uint64_t    WTRS;
+    uint64_t    RTW;
+    uint64_t    XP;
+    uint64_t    CKE;
+    uint64_t    XS;
+    uint64_t    RFC;
+    uint64_t    RFCSB;
+    uint64_t    RREFD;
+    uint64_t    REFI;
+    uint64_t    REFISB;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM2, tCK, DQSCK, RC, RAS, RCDRD, RCDWR, RRDL, RRDS, FAW, RTP, RP, RL, WL, PL, WR, CCDL, CCDS, WTRL, WTRS, RTW, XP, CKE, XS, RFC, RFCSB, RREFD, REFI, REFISB)
+
 struct MemSpecHBM2 : BaseMemSpec
 {
     static constexpr inline const std::string_view id = "HBM2";
     std::string memoryId;
 
+    MemArchitectureSpecTypeHBM2 memarchitecturespec;
+    MemTimingSpecTypeHBM2 memtimingspec;
+
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecHBM2, memoryId)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecHBM2, memoryId, memarchitecturespec, memtimingspec)
 
 } // namespace DRAMUtils::Config
 

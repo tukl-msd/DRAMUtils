@@ -164,9 +164,10 @@ struct MemPowerSpecTypeDDR5
 
     double vddq;
 
-    std::optional<double> iBeta;
+    std::optional<double> iBeta_vdd;
+    std::optional<double> iBeta_vpp;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeDDR5, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd5c, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp5c, ipp6n, ipp2p, ipp3p, idd5b, idd5f, ipp5b, ipp5f, vddq, iBeta)
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeDDR5, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd5c, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp5c, ipp6n, ipp2p, ipp3p, idd5b, idd5f, ipp5b, ipp5f, vddq, iBeta_vdd, iBeta_vpp)
 
 struct BankWiseSpecTypeDDR5
 {
@@ -189,6 +190,13 @@ struct MemImpedanceSpecTypeDDR5 {
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeDDR5, C_total_cb, C_total_ck, C_total_dqs, C_total_rb, C_total_wb, R_eq_cb, R_eq_ck, R_eq_dqs, R_eq_rb, R_eq_wb)
 
+struct DataRateSpecTypeDDR5 {
+    uint64_t ca_bus_rate;
+    uint64_t dq_bus_rate;
+    uint64_t dqs_bus_rate;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(DataRateSpecTypeDDR5, ca_bus_rate, dq_bus_rate, dqs_bus_rate)
+
 struct MemSpecDDR5 : BaseMemSpec
 {
     static constexpr inline const std::string_view id = "DDR5";
@@ -200,8 +208,9 @@ struct MemSpecDDR5 : BaseMemSpec
     MemTimingSpecTypeDDR5 memtimingspec;
     std::optional<BankWiseSpecTypeDDR5> bankwisespec;
     MemImpedanceSpecTypeDDR5 memimpedancespec;
+    std::optional<DataRateSpecTypeDDR5> dataratespec;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR5, memoryId, RefreshMode, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR5, memoryId, RefreshMode, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec, dataratespec)
 
 } // namespace DRAMUtils::Config
 

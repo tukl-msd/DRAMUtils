@@ -54,8 +54,12 @@ struct MemArchitectureSpecTypeDDR3
     uint64_t dataRate;
     uint64_t width;
     std::optional<uint64_t> maxBurstLength;
+    uint64_t nbrOfChannels;
+    uint64_t nbrOfRanks;
+    uint64_t nbrOfBanks;
+    uint64_t nbrOfDevices;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR3, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR3, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength, nbrOfChannels, nbrOfRanks, nbrOfBanks, nbrOfDevices)
 
 struct MemTimingSpecDDR3
 {

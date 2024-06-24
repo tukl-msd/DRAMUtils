@@ -25,3 +25,4 @@ cmake-build*
 .idea
 .cache
 .env
+scripts/

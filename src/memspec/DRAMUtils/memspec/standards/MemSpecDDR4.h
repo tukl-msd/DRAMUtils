@@ -119,7 +119,7 @@ struct MemPowerSpecTypeDDR4
     double ipp3n;
     double ipp4r;
     double ipp4w;
-    double ipp6;
+    double ipp6n;
     double ipp2p;
     double ipp3p;
     
@@ -137,9 +137,10 @@ struct MemPowerSpecTypeDDR4
 
     double vddq;
     
-    std::optional<double> iBeta;
+    std::optional<double> iBeta_vdd;
+    std::optional<double> iBeta_vpp;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeDDR4, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp6, ipp2p, ipp3p, idd5B, ipp5B, idd5F2, ipp5F2, idd5F4, ipp5F4, vddq, iBeta)
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeDDR4, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp6n, ipp2p, ipp3p, idd5B, ipp5B, idd5F2, ipp5F2, idd5F4, ipp5F4, vddq, iBeta_vdd, iBeta_vpp)
 
 struct BankWiseSpecTypeDDR4
 {

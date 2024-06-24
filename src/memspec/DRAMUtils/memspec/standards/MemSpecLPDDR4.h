@@ -95,12 +95,10 @@ struct MemTimingSpecTypeLPDDR4
     uint64_t    RCpb;
     uint64_t    RCab;
     uint64_t    PPD;
-    uint64_t    RCD;
     uint64_t    FAW;
     uint64_t    RRD;
     uint64_t    CCD;
     uint64_t    CCDMW;
-    uint64_t    RL;
     uint64_t    RPST;
     uint64_t    DQSCK;
     uint64_t    RTP;
@@ -115,7 +113,7 @@ struct MemTimingSpecTypeLPDDR4
     uint64_t    XSR;
     uint64_t    RTRS;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR4, tCK, CKE, ESCKE, CMDCKE, RAS, RCD, RL, REFM, REFI, REFIpb, RFCpb, RFCab, RPpb, RPab, RCpb, RCab, PPD, RCD, FAW, RRD, CCD, CCDMW, RL, RPST, DQSCK, RTP, WL, DQSS, DQS2DQ, WR, WPRE, WTR, XP, SR, XSR, RTRS)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR4, tCK, CKE, ESCKE, CMDCKE, RAS, RCD, RL, REFM, REFI, REFIpb, RFCpb, RFCab, RPpb, RPab, RCpb, RCab, PPD, FAW, RRD, CCD, CCDMW, RPST, DQSCK, RTP, WL, DQSS, DQS2DQ, WR, WPRE, WTR, XP, SR, XSR, RTRS)
 
 enum class pasrModesType {
     PASR_0,
@@ -144,8 +142,9 @@ struct BankWiseSpecTypeLPDDR4
     std::optional<double>           factRho;
     std::optional<double>           factSigma;
     std::optional<pasrModesType>    pasrMode;
+    std::optional<bool>             hasPASR;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeLPDDR4, factRho, factSigma, pasrMode)
+NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeLPDDR4, factRho, factSigma, pasrMode, hasPASR)
 
 struct MemPowerSpecTypeLPDDR4
 {
@@ -174,8 +173,11 @@ struct MemPowerSpecTypeLPDDR4
     double  idd3p2;
 
     double vddq;
+
+    std::optional<double> iBeta_vdd1;
+    std::optional<double> iBeta_vdd2;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR4, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd2p1, idd3p1, vdd2, idd02, idd2n2, idd3n2, idd4r2, idd4w2, idd52, idd5pb2, idd62, idd2p2, idd3p2, vddq)
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR4, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd2p1, idd3p1, vdd2, idd02, idd2n2, idd3n2, idd4r2, idd4w2, idd52, idd5pb2, idd62, idd2p2, idd3p2, vddq, iBeta_vdd1, iBeta_vdd2)
 
 struct MemSpecLPDDR4 : BaseMemSpec
 {

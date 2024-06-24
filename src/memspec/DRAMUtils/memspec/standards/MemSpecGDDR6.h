@@ -44,13 +44,70 @@
 
 namespace DRAMUtils::Config {
 
+struct MemArchitectureSpecTypeGDDR6
+{
+    uint64_t nbrOfRows;
+    uint64_t nbrOfColumns;
+    uint64_t burstLength;
+    std::optional<uint64_t> maxBurstLength;
+    uint64_t dataRate;
+    uint64_t width;
+    uint64_t per2BankOffset;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeGDDR6, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, per2BankOffset)
+
+struct MemTimingSpecTypeGDDR6
+{
+    double tCK;
+    uint64_t    RP;
+    uint64_t    RAS;
+    uint64_t    RC;
+    uint64_t    RCDRD;
+    uint64_t    RCDWR;
+    uint64_t    RTP;
+    uint64_t    RRDS;
+    uint64_t    RRDL;
+    uint64_t    CCDS;
+    uint64_t    CCDL;
+    uint64_t    RL;
+    uint64_t    WCK2CKPIN;
+    uint64_t    WCK2CK;
+    uint64_t    WCK2DQO;
+    uint64_t    RTW;
+    uint64_t    WL;
+    uint64_t    WCK2DQI;
+    uint64_t    WR;
+    uint64_t    WTRS;
+    uint64_t    WTRL;
+    uint64_t    PD;
+    uint64_t    CKESR;
+    uint64_t    XP;
+    uint64_t    REFI;
+    uint64_t    REFIpb;
+    uint64_t    RFCab;
+    uint64_t    RFCpb;
+    uint64_t    RREFD;
+    uint64_t    XS;
+    uint64_t    FAW;
+    uint64_t    PPD;
+    uint64_t    LK;
+    uint64_t    ACTPDE;
+    uint64_t    PREPDE;
+    uint64_t    REFPDE;
+    uint64_t    RTRS;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeGDDR6, tCK, RP, RAS, RC, RCDRD, RCDWR, RTP, RRDS, RRDL, CCDS, CCDL, RL, WCK2CKPIN, WCK2CK, WCK2DQO, RTW, WL, WCK2DQI, WR, WTRS, WTRL, PD, CKESR, XP, REFI, REFIpb, RFCab, RFCpb, RREFD, XS, FAW, PPD, LK, ACTPDE, PREPDE, REFPDE, RTRS, RAS)
+
 struct MemSpecGDDR6 : BaseMemSpec
 {
     static constexpr inline const std::string_view id = "GDDR6";
     std::string memoryId;
 
+    MemArchitectureSpecTypeGDDR6 memarchitecturespec;
+    MemTimingSpecTypeGDDR6 memtimingspec;
+
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecGDDR6, memoryId)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecGDDR6, memoryId, memarchitecturespec, memtimingspec)
 
 } // namespace DRAMUtils::Config
 
