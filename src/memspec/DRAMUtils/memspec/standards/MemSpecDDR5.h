@@ -78,10 +78,10 @@ struct MemTimingSpecTypeDDR5
     uint64_t    WL;
     uint64_t    WR;
     uint64_t    RP;
-    uint64_t    RFCsb;
+    uint64_t    RFCsb; // TODO -> slr nehmen
 
-    uint64_t    RFC1;
-    uint64_t    RFC2;
+    uint64_t    RFC1; // TODO -> slr nehmen
+    uint64_t    RFC2; // TODO -> slr nehmen
 
     uint64_t    PPD;
     uint64_t    RL;

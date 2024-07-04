@@ -62,7 +62,9 @@
 namespace DRAMUtils::Config
 {
 
-char MemSpecContainerIdName[] = "memoryType";
+struct MemSpecContainerIdName{
+    static constexpr char name[] = "memoryType";
+};
 
 // Variant types
 using VariantTypes = util::type_sequence<
@@ -80,12 +82,12 @@ using VariantTypes = util::type_sequence<
     MemSpecHBM3,
     MemSpecSTTMRAM
 >;
-using MemSpecVariant = util::JSONVariant<MemSpecContainerIdName, VariantTypes>;
+using MemSpecVariant = util::JSONVariant<MemSpecContainerIdName::name, VariantTypes>;
 
 // Simple MemSpecContainer
 struct MemSpecContainer
 {
-    MemSpecVariant memspec;
+    DRAMUtils::Config::MemSpecVariant memspec;
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
 
