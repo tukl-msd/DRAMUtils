@@ -40,8 +40,7 @@
 
 struct BaseMemSpec
 {
-    static constexpr std::string_view KEY = "memspec";
-    static constexpr std::string_view SUB_DIR = "memspec";
+
 };
 
 #endif /* DRAMUTILS_MEMSPEC_BASEMEMSPEC_H */
