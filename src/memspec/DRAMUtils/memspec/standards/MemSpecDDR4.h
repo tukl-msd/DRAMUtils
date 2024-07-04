@@ -57,9 +57,10 @@ struct MemArchitectureSpecTypeDDR4
     uint64_t burstLength;
     uint64_t dataRate;
     uint64_t width;
+    uint64_t RefMode;
     std::optional<uint64_t> maxBurstLength;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR4, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeDDR4, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, RefMode, maxBurstLength)
 
 struct MemTimingSpecTypeDDR4
 {
@@ -123,15 +124,15 @@ struct MemPowerSpecTypeDDR4
     double ipp2p;
     double ipp3p;
     
-    // refreshMode==1
+    // MemArchitectureSpecTypeDDR4::RefMode==1
     double idd5B;
     double ipp5B;
     
-    // refreshMode==2
+    // MemArchitectureSpecTypeDDR4::RefMode==2
     double idd5F2;
     double ipp5F2;
     
-    // refreshMode==4
+    // MemArchitectureSpecTypeDDR4::RefMode==4
     double idd5F4;
     double ipp5F4;
 
@@ -192,7 +193,6 @@ struct MemSpecDDR4 : BaseMemSpec
     static constexpr inline const std::string_view id = "DDR4";
     std::string memoryId;
     
-    uint64_t RefreshMode;
     MemArchitectureSpecTypeDDR4 memarchitecturespec;
     MemPowerSpecTypeDDR4 mempowerspec;
     MemTimingSpecTypeDDR4 memtimingspec;
@@ -200,7 +200,7 @@ struct MemSpecDDR4 : BaseMemSpec
     MemImpedanceSpecTypeDDR4 memimpedancespec;
     PrePostambleTypeDDR4 prepostamble;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR4, memoryId, RefreshMode, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec, prepostamble)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR4, memoryId, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec, prepostamble)
 
 } // namespace DRAMUtils::Config
 
