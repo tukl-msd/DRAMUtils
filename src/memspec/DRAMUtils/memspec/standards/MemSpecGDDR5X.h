@@ -58,7 +58,7 @@ struct MemArchitectureSpecTypeGDDR5X
     uint64_t nbrOfBanks;
     uint64_t nbrOfBankGroups;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeGDDR5X, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeGDDR5X, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups)
 
 struct MemTimingSpecTypeGDDR5X
 {

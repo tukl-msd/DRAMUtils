@@ -90,12 +90,12 @@ struct MemTimingSpecTypeHBM3
     uint64_t    XS;
     uint64_t    RFC;
     uint64_t    RFCPB;
-    uint64_t    PREFD;
+    uint64_t    RREFD;
     uint64_t    REFI;
     uint64_t    REFIPB;
     uint64_t    PPD;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM3, tCK, DQSCK, RC, RAS, RCDRD, RCDWR, RRDL, RRDS, FAW, RTP, RP, RL, WL, PL, WR, CCDL, CCDS, WTRL, WTRS, RTW, XP, CKE, XS, RFC, RFCPB, PREFD, REFI, REFIPB, PPD)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM3, tCK, DQSCK, RC, RAS, RCDRD, RCDWR, RRDL, RRDS, FAW, RTP, RP, RL, WL, PL, WR, CCDL, CCDS, WTRL, WTRS, RTW, XP, CKE, XS, RFC, RFCPB, RREFD, REFI, REFIPB, PPD)
 
 struct MemSpecHBM3 : BaseMemSpec
 {

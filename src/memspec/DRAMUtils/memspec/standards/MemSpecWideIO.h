@@ -52,8 +52,12 @@ struct MemArchitectureSpecTypeWideIO
     std::optional<uint64_t> maxBurstLength;
     uint64_t dataRate;
     uint64_t width;
+    uint64_t nbrOfChannels;
+    uint64_t nbrOfRanks;
+    uint64_t nbrOfBanks;
+    uint64_t nbrOfDevices;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeWideIO, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeWideIO, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, nbrOfChannels, nbrOfRanks, nbrOfBanks, nbrOfDevices)
 
 struct MemTimingSpecTypeWideIO
 {

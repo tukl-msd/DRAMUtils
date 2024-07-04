@@ -53,8 +53,13 @@ struct MemArchitectureSpecTypeGDDR6
     uint64_t dataRate;
     uint64_t width;
     uint64_t per2BankOffset;
+    uint64_t nbrOfChannels;
+    uint64_t nbrOfRanks;
+    uint64_t nbrOfBanks;
+    uint64_t nbrOfDevices;
+    uint64_t nbrOfBankGroups;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeGDDR6, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, per2BankOffset)
+NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeGDDR6, nbrOfRows, nbrOfColumns, burstLength, maxBurstLength, dataRate, width, per2BankOffset, nbrOfChannels, nbrOfRanks, nbrOfBanks, nbrOfDevices, nbrOfBankGroups)
 
 struct MemTimingSpecTypeGDDR6
 {
@@ -96,7 +101,7 @@ struct MemTimingSpecTypeGDDR6
     uint64_t    REFPDE;
     uint64_t    RTRS;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeGDDR6, tCK, RP, RAS, RC, RCDRD, RCDWR, RTP, RRDS, RRDL, CCDS, CCDL, RL, WCK2CKPIN, WCK2CK, WCK2DQO, RTW, WL, WCK2DQI, WR, WTRS, WTRL, PD, CKESR, XP, REFI, REFIpb, RFCab, RFCpb, RREFD, XS, FAW, PPD, LK, ACTPDE, PREPDE, REFPDE, RTRS, RAS)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeGDDR6, tCK, RP, RAS, RC, RCDRD, RCDWR, RTP, RRDS, RRDL, CCDS, CCDL, RL, WCK2CKPIN, WCK2CK, WCK2DQO, RTW, WL, WCK2DQI, WR, WTRS, WTRL, PD, CKESR, XP, REFI, REFIpb, RFCab, RFCpb, RREFD, XS, FAW, PPD, LK, ACTPDE, PREPDE, REFPDE, RTRS)
 
 struct MemSpecGDDR6 : BaseMemSpec
 {
