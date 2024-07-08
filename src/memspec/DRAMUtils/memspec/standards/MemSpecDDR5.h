@@ -105,12 +105,12 @@ struct MemTimingSpecTypeDDR5
     uint64_t    WTR_L;
     uint64_t    WTR_M;
     uint64_t    WTR_S;
-    uint64_t    RFC1_slr;
-    uint64_t    RFC2_slr;
-    uint64_t    RFC1_dlr;
-    uint64_t    RFC2_dlr;
-    uint64_t    RFC1_dpr;
-    uint64_t    RFC2_dpr;
+    uint64_t    RFC1_slr; // MemArchitectureSpecTypeDDR5::RefMode == 1
+    uint64_t    RFC2_slr; // MemArchitectureSpecTypeDDR5::RefMode == 2
+    uint64_t    RFC1_dlr; // MemArchitectureSpecTypeDDR5::RefMode == 1
+    uint64_t    RFC2_dlr; // MemArchitectureSpecTypeDDR5::RefMode == 2
+    uint64_t    RFC1_dpr; // MemArchitectureSpecTypeDDR5::RefMode == 1
+    uint64_t    RFC2_dpr; // MemArchitectureSpecTypeDDR5::RefMode == 2
     uint64_t    RFCsb_slr;
     uint64_t    RFCsb_dlr;
     uint64_t    REFI1;
@@ -152,11 +152,11 @@ struct MemPowerSpecTypeDDR5
     double ipp2p;
     double ipp3p;
 
-    double idd5b;
-    double idd5f;
+    double idd5b; // MemArchitectureSpecTypeDDR5::RefMode == 1
+    double idd5f; // MemArchitectureSpecTypeDDR5::RefMode == 2
 
-    double ipp5b;
-    double ipp5f;
+    double ipp5b; // MemArchitectureSpecTypeDDR5::RefMode == 1
+    double ipp5f; // MemArchitectureSpecTypeDDR5::RefMode == 2
 
     double vddq;
 
