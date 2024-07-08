@@ -43,7 +43,7 @@
 #include <optional>
 #include <variant>
 #include <string>
-#include "json_variant.h"
+#include "id_variant.h"
 
 using json_t = nlohmann::json;
 
@@ -69,8 +69,8 @@ void variant_to_json(nlohmann::json& j, const std::variant<Ts...> &data)
     std::visit([&j](const auto& v) { j = v; }, data);
 }
 
-template <const char* name, typename Seq>
-void json_variant_from_json(const nlohmann::json& j, JSONVariant<name, Seq>& data, std::optional<std::string_view> key)
+template <const char* id_field_name, typename Seq>
+void id_variant_from_json(const nlohmann::json& j, IdVariant<id_field_name, Seq>& data, std::optional<std::string_view> key)
 {
     if (key)
     {
@@ -95,8 +95,8 @@ void json_variant_from_json(const nlohmann::json& j, JSONVariant<name, Seq>& dat
     }
 }
 
-template <const char* name, typename Seq>
-void json_variant_to_json(nlohmann::json& j, const JSONVariant<name, Seq>& data, std::optional<std::string_view> key)
+template <const char* id_field_name, typename Seq>
+void id_variant_to_json(nlohmann::json& j, const IdVariant<id_field_name, Seq>& data, std::optional<std::string_view> key)
 {
     if (key)
         data.to_json(j[*key]);
@@ -138,9 +138,9 @@ template <typename T>
 constexpr bool is_optional<std::optional<T>> = true;
 
 template <typename>
-constexpr bool is_json_variant = false;
-template <char const * name, typename Seq>
-constexpr bool is_json_variant<JSONVariant<name, Seq>> = true;
+constexpr bool is_id_variant = false;
+template <char const * id_field_name, typename Seq>
+constexpr bool is_id_variant<IdVariant<id_field_name, Seq>> = true;
 
 template <typename>
 constexpr bool is_variant = false;
@@ -151,8 +151,8 @@ template <typename T> void extended_to_json(const char* key, nlohmann::json& j, 
 {
     if constexpr (is_optional<T>)
         optional_to_json(j, value, key);
-    else if constexpr (is_json_variant<T>)
-        json_variant_to_json(j, value, key);
+    else if constexpr (is_id_variant<T>)
+        id_variant_to_json(j, value, key);
     else if constexpr (is_variant<T>)
         variant_to_json(j, value);
     else
@@ -163,8 +163,8 @@ template <typename T> void extended_from_json(const char* key, const nlohmann::j
 {
     if constexpr (is_optional<T>)
         optional_from_json(j, value, key);
-    else if constexpr (is_json_variant<T>)
-        json_variant_from_json(j, value, key);
+    else if constexpr (is_id_variant<T>)
+        id_variant_from_json(j, value, key);
     else if constexpr (is_variant<T>)
         variant_from_json<T>(j, value);
     else
@@ -190,17 +190,17 @@ template <typename... Ts> struct adl_serializer<std::variant<Ts...>>
 };
 
 
-template <const char * name, typename Seq> struct adl_serializer<DRAMUtils::util::JSONVariant<name, Seq>>
+template <const char * id_field_name, typename Seq> struct adl_serializer<DRAMUtils::util::IdVariant<id_field_name, Seq>>
 {
-    static void to_json(nlohmann::json& j, const DRAMUtils::util::JSONVariant<name, Seq>& data)
+    static void to_json(nlohmann::json& j, const DRAMUtils::util::IdVariant<id_field_name, Seq>& data)
     {
-        DRAMUtils::util::json_variant_to_json<name, Seq>(j, data, std::nullopt);
+        DRAMUtils::util::id_variant_to_json<id_field_name, Seq>(j, data, std::nullopt);
     }
 
-    static void from_json(const nlohmann::json& j, DRAMUtils::util::JSONVariant<name, Seq>& data)
+    static void from_json(const nlohmann::json& j, DRAMUtils::util::IdVariant<id_field_name, Seq>& data)
     {
         // Match variant by id
-        DRAMUtils::util::json_variant_from_json<name, Seq>(j, data, std::nullopt);
+        DRAMUtils::util::id_variant_from_json<id_field_name, Seq>(j, data, std::nullopt);
     }
 };
 

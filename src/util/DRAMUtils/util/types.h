@@ -43,8 +43,13 @@
 namespace DRAMUtils::util
 {
 
+
 // Helper struct to create a type sequence
 template <typename... Ts> struct type_sequence {};
+
+// Helper struct for static assert
+template<typename>
+struct always_false : std::false_type {};
 
 // Helper struct to check if a type is in a type sequence
 // forward declaration
@@ -104,17 +109,45 @@ struct is_id_const_string_view<type_sequence<Ts...>> :
     std::bool_constant<(is_id_const_string_view<Ts>::value && ...)> 
 {};
 
+// Helper to check if T has a member with name membername
+template <const char* id_field_name, typename some_type>
+struct select_tag {static_assert(always_false<some_type>::value,
+    "Invalid tag or no select_tag defined. Use the macro DEFINE_HAS_MEMBER.");};
+template <typename T, typename Tag, typename Enable = void>
+struct has_member : std::false_type {};
+/**
+ * @brief Macro to define a has_member template check and a select_tag template.
+ *          The select_tag macro maps a const char * to a type. The has_member template
+ *          checks if the member exists in the type T. The macro has to be used in the global namespace.
+ * @param membername Name of the member to check
+ * @note This macro defines a struct with the name containername and a member with the name membername.
+ *          the membername can be accessed by the DRAMUtils::util::membername::name.
+ */
+#define DEFINE_HAS_MEMBER(membername) \
+    namespace DRAMUtils::util { \
+    struct membername \
+    { \
+        static constexpr char name[] = #membername; \
+    }; \
+    struct membername##_tag {}; \
+    template <> \
+    struct select_tag<membername::name, void> { using type = membername##_tag; }; \
+    template <typename T> \
+    struct has_member<T, membername##_tag, std::void_t<decltype(std::declval<T>().membername)>> : std::true_type {}; \
+    } // namespace DRAMUtils::util
+
+
 // std::variant type_sequence variant helper
 // constexpr std::string_view id field is required
 // forward declaration
-template<typename Seq, typename = void>
-struct type_sequence_variant
+template<typename Seq, typename enable = void>
+struct type_sequence_id_variant
 {
-    static_assert(std::is_same_v<Seq, void>, "Invalid type sequence for variant");
+    static_assert(always_false<Seq>::value, "Invalid type sequence for variant");
 };
 // specialization
 template<typename... Ts>
-struct type_sequence_variant<type_sequence<Ts...>, std::void_t<
+struct type_sequence_id_variant<type_sequence<Ts...>, std::void_t<
     std::enable_if_t<has_noexcept_id_field<type_sequence<Ts...>>::value>,
     std::enable_if_t<are_ids_unique<type_sequence<Ts...>>::value>,
     std::enable_if_t<is_id_const_string_view<type_sequence<Ts...>>::value>
@@ -122,9 +155,9 @@ struct type_sequence_variant<type_sequence<Ts...>, std::void_t<
 {
     using type = std::variant<Ts...>;
 };
-// type_sequence_variant_t
+// type_sequence_id_variant_t
 template<typename Seq>
-using type_sequence_variant_t = typename type_sequence_variant<Seq>::type;
+using type_sequence_id_variant_t = typename type_sequence_id_variant<Seq>::type;
 
 } // namespace DRAMUtils::util
 

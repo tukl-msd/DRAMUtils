@@ -43,7 +43,7 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 #include "DRAMUtils/util/types.h"
-#include "DRAMUtils/util/json_variant.h"
+#include "DRAMUtils/util/id_variant.h"
 
 #include "standards/MemSpecDDR3.h"
 #include "standards/MemSpecDDR4.h"
@@ -59,12 +59,9 @@
 #include "standards/MemSpecHBM3.h"
 #include "standards/MemSpecSTTMRAM.h"
 
+DEFINE_HAS_MEMBER(memoryType) // Required by util::IdVariant
 namespace DRAMUtils::Config
 {
-
-struct MemSpecContainerIdName{
-    static constexpr char name[] = "memoryType";
-};
 
 // Variant types
 using VariantTypes = util::type_sequence<
@@ -82,7 +79,9 @@ using VariantTypes = util::type_sequence<
     MemSpecHBM3,
     MemSpecSTTMRAM
 >;
-using MemSpecVariant = util::JSONVariant<MemSpecContainerIdName::name, VariantTypes>;
+
+// util::MemSpecContainerIdName::name defined by DEFINE_HAS_MEMBER
+using MemSpecVariant = util::IdVariant<util::memoryType::name, VariantTypes>;
 
 // Simple MemSpecContainer
 struct MemSpecContainer

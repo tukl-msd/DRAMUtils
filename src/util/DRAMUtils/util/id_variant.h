@@ -33,8 +33,8 @@
  *    Marco Mörz
  */
 
-#ifndef DRAMUTILS_UTIL_JSON_VARIANT_H
-#define DRAMUTILS_UTIL_JSON_VARIANT_H
+#ifndef DRAMUTILS_UTIL_ID_VARIANT_H
+#define DRAMUTILS_UTIL_ID_VARIANT_H
 
 #include <variant>
 #include <string_view>
@@ -45,26 +45,45 @@
 namespace DRAMUtils::util
 {
 
-template<char const * name, typename Seq>
-class JSONVariant;
-template<char const * name, typename... Ts>
-class JSONVariant<name, util::type_sequence<Ts...>>
+// uses select_tag and has_member defined by macro DEFINE_HAS_MEMBER
+template <char const * name, typename... Ts>
+struct has_no_member_with_name {
+    using tag = typename select_tag<name, void>::type;
+    static constexpr bool value = !(has_member<Ts, tag>::value || ...);
+};
+
+template <char const * id_field_name, typename Seq, typename Enable = void>
+class IdVariant
+{
+    static_assert(util::always_false<Seq>::value,
+        "Variant Types cannot have a member named id_field_name or DEFINE_HAS_MEMBER macro is missing for the has_member template");
+};
+
+/**
+ * @brief A variant that can be serialized to and from JSON with a field that determines the type.
+ *          The macro call DEFINE_HAS_MEMBER(id_field_name) in the global namespace is required for
+ *          each different id_field_name used in the IdVariant.
+ */
+template<char const * id_field_name, typename... Ts>
+class IdVariant<id_field_name, util::type_sequence<Ts...>, std::void_t<
+    std::enable_if_t<has_no_member_with_name<id_field_name, Ts...>::value>
+>>
 {
 private:
     using VariantTypes = util::type_sequence<Ts...>;
-    using Variant = util::type_sequence_variant_t<VariantTypes>;
+    using Variant = util::type_sequence_id_variant_t<VariantTypes>;
     using Json = nlohmann::json;
     Variant variant;
 
 private:
     template <typename Seq>
-    bool variant_from_json(const Json& j, util::type_sequence_variant_t<Seq>& data) {
+    bool variant_from_json(const Json& j, util::type_sequence_id_variant_t<Seq>& data) {
         return variant_from_json_impl(j, data, Seq{}); // Seq{} needed for type deduction
     }
 
     template <typename... Types>
-    bool variant_from_json_impl(const Json& j, util::type_sequence_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
-        return ((j.at(name).get<std::string_view>() == Types::id && (data = j.get<Types>(), true)) || ...);
+    bool variant_from_json_impl(const Json& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
+        return ((j.at(id_field_name).get<std::string_view>() == Types::id && (data = j.get<Types>(), true)) || ...);
     }
 
 public:
@@ -89,7 +108,7 @@ public:
             [&j](const auto& v) {
                 // TODO Variant Types cannot have a member named id_field
                 j = v;
-                j[name] = v.id;
+                j[id_field_name] = v.id;
             },
         variant);
     }
@@ -100,4 +119,4 @@ public:
 
 } // namespace DRAMUtils::util
 
-#endif /* DRAMUTILS_UTIL_JSON_VARIANT_H */
+#endif /* DRAMUTILS_UTIL_ID_VARIANT_H */
