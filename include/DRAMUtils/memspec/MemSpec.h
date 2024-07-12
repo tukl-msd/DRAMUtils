@@ -38,7 +38,6 @@
 
 #include <string>
 #include <variant>
-#include "DRAMUtils/util/util.h"
 #include "DRAMUtils/util/json.h"
 #include "nlohmann/json.hpp"
 #include <iostream>
