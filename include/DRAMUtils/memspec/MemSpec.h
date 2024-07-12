@@ -33,14 +33,64 @@
  *    Marco Mörz
  */
 
-#ifndef DRAMUTILS_MEMSPEC_BASEMEMSPEC_H
-#define DRAMUTILS_MEMSPEC_BASEMEMSPEC_H
+#ifndef DRAMUTILS_MEMSPEC_MEMSPEC_H
+#define DRAMUTILS_MEMSPEC_MEMSPEC_H
 
-#include <string_view>
+#include <string>
+#include <variant>
+#include "DRAMUtils/util/util.h"
+#include "DRAMUtils/util/json.h"
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include "DRAMUtils/util/types.h"
+#include "DRAMUtils/util/id_variant.h"
 
-struct BaseMemSpec
+#include "standards/MemSpecDDR3.h"
+#include "standards/MemSpecDDR4.h"
+#include "standards/MemSpecDDR5.h"
+#include "standards/MemSpecLPDDR4.h"
+#include "standards/MemSpecLPDDR5.h"
+#include "standards/MemSpecWideIO.h"
+#include "standards/MemSpecWideIO2.h"
+#include "standards/MemSpecGDDR5.h"
+#include "standards/MemSpecGDDR5X.h"
+#include "standards/MemSpecGDDR6.h"
+#include "standards/MemSpecHBM2.h"
+#include "standards/MemSpecHBM3.h"
+#include "standards/MemSpecSTTMRAM.h"
+
+DEFINE_HAS_MEMBER(memoryType) // Required by util::IdVariant
+
+namespace DRAMUtils::Config
 {
 
-};
+// Variant types
+using VariantTypes = util::type_sequence<
+    MemSpecDDR3,
+    MemSpecDDR4,
+    MemSpecDDR5,
+    MemSpecLPDDR4,
+    MemSpecLPDDR5,
+    MemSpecWideIO,
+    MemSpecWideIO2,
+    MemSpecGDDR5,
+    MemSpecGDDR5X,
+    MemSpecGDDR6,
+    MemSpecHBM2,
+    MemSpecHBM3,
+    MemSpecSTTMRAM
+>;
 
-#endif /* DRAMUTILS_MEMSPEC_BASEMEMSPEC_H */
+// util::MemSpecContainerIdName::name defined by DEFINE_HAS_MEMBER
+using MemSpecVariant = util::IdVariant<util::memoryType::name, VariantTypes>;
+
+// Simple MemSpecContainer
+struct MemSpecContainer
+{
+    DRAMUtils::Config::MemSpecVariant memspec;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
+
+} // namespace DRAMUtils::Config
+
+#endif /* DRAMUTILS_MEMSPEC_MEMSPEC_H */

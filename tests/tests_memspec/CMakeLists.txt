@@ -14,8 +14,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC TEST_RESOURCE_DIR="${CMAKE_CUR
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME}
     gtest_main
-    # DRAMSys::DRAMUtils
-    DRAMUtils
+    DRAMSys::DRAMUtils
 )
 
 gtest_discover_tests(${PROJECT_NAME})

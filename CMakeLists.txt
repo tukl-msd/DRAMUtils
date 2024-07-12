@@ -69,7 +69,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 endif()
 
 ### DRAMUtils directories ###
-set(DRAMUTILS_SOURCE_DIR  "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(DRAMUTILS_INCLUDE_DIR  "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(DRAMUTILS_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(DRAMUTILS_TEST_DIR    "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 
@@ -78,6 +78,8 @@ option(DRAMUTILS_BUILD_TESTS "Build DRAMUtils unit tests" OFF)
 
 ### Compiler settings ###
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ###############################################
 ###           Library Settings              ###
@@ -86,19 +88,8 @@ set(CMAKE_CXX_STANDARD 17)
 ### Detect OS threading library ###
 find_package(Threads)
 
-add_subdirectory(${DRAMUTILS_LIBRARY_DIR}/nlohmann_json)
-
 ### nlohmann_json ###
-#FetchContent_Declare(
-#        json
-#        GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-#        GIT_TAG v3.9.1)
-#
-#FetchContent_GetProperties(json)
-#if(NOT json_POPULATED)
-#    FetchContent_Populate(json)
-#    add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
-#endif()
+add_subdirectory(${DRAMUTILS_LIBRARY_DIR}/nlohmann_json)
 
 ### GoogleTest ###
 if(DRAMUTILS_BUILD_TESTS)
@@ -117,11 +108,10 @@ if(DRAMUTILS_BUILD_TESTS)
 endif()
 
 ###############################################
-###           Source Directory              ###
+###                 DRAMUtils               ###
 ###############################################
 
-add_subdirectory(src/memspec)
-add_subdirectory(src/util)
+include(dram_utils.cmake)
 
 ###############################################
 ###           Test Directory                ###

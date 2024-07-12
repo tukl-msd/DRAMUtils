@@ -37,22 +37,23 @@
 ###          DRAMUtils::util         ###
 ########################################
 
-project(DRAMUtils_Util)
+project(DRAMUtils)
 
-file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS *.cpp)
-file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS *.h;*.hpp)
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ${DRAMUTILS_INCLUDE_DIR}/*.cpp)
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ${DRAMUTILS_INCLUDE_DIR}/*.h; ${DRAMUTILS_INCLUDE_DIR}/*.hpp)
 
-add_library(DRAMUtils_Util STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(${PROJECT_NAME} INTERFACE ${SOURCE_FILES} ${HEADER_FILES})
 
-target_include_directories(DRAMUtils_Util PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+message(STATUS "SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-target_link_libraries(DRAMUtils_Util
-    PUBLIC
+target_link_libraries(${PROJECT_NAME}
+    INTERFACE
         nlohmann_json::nlohmann_json
 )
 
-add_library(DRAMUtils::util ALIAS DRAMUtils_Util)
-add_library(DRAMSys::DRAMUtils::util ALIAS DRAMUtils_Util)
+add_library(DRAMUtils::DRAMUtils ALIAS ${PROJECT_NAME})
+add_library(DRAMSys::DRAMUtils ALIAS ${PROJECT_NAME})
 
 
-build_source_group()
+build_source_group_include()

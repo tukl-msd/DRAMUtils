@@ -10,6 +10,8 @@
 #include "DRAMUtils/memspec/MemSpec.h"
 #include "DRAMUtils/memspec/standards/MemSpecDDR3.h"
 
+//DRAMUTILS_DEFINE_HAS_MEMBER(memoryType) // Required by util::IdVariant
+
 using namespace DRAMUtils;
 
 // TODO change Config::MemSpec namespace to MemSpec
