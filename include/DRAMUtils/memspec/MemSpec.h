@@ -81,8 +81,7 @@ using VariantTypes = util::type_sequence<
     MemSpecSTTMRAM
 >;
 
-// util::MemSpecContainerIdName::name defined by DEFINE_HAS_MEMBER
-using MemSpecVariant = util::IdVariant<util::memoryType::name, VariantTypes>;
+DRAMUTILS_DECLARE_IDVARIANT(MemSpecVariant, memoryType, VariantTypes)
 
 // Simple MemSpecContainer
 struct MemSpecContainer

@@ -42,6 +42,9 @@
 #include "types.h"
 #include "nlohmann/json.hpp"
 
+#define DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence) \
+    using VariantName = DRAMUtils::util::IdVariant<DRAMUtils::util::IDFieldName::name, VariantTypeSequence>;
+
 namespace DRAMUtils::util
 {
 
