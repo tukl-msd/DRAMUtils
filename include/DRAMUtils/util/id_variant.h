@@ -48,7 +48,7 @@
 namespace DRAMUtils::util
 {
 
-// uses select_tag and has_member defined by macro DEFINE_HAS_MEMBER
+// uses select_tag and has_member defined by macro DRAMUTILS_DEFINE_IDFIELDNAME
 template <char const * name, typename... Ts>
 struct has_no_member_with_name {
     using tag = typename select_tag<name, void>::type;
@@ -59,13 +59,16 @@ template <char const * id_field_name, typename Seq, typename Enable = void>
 class IdVariant
 {
     static_assert(util::always_false<Seq>::value,
-        "Variant Types cannot have a member named id_field_name or DEFINE_HAS_MEMBER macro is missing for the has_member template");
+"Variant Types cannot have a member named id_field_name or 
+DRAMUTILS_DEFINE_IDFIELDNAME macro is missing for the id_field_name"
+    );
 };
 
 /**
  * @brief A variant that can be serialized to and from JSON with a field that determines the type.
- *          The macro call DEFINE_HAS_MEMBER(id_field_name) in the global namespace is required for
- *          each different id_field_name used in the IdVariant.
+ *          The macro call DRAMUTILS_DEFINE_IDFIELDNAME(id_field_name) in the global namespace is required for
+ *          each different id_field_name used in the IdVariant. For an easier declaration use the macro
+ *          DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence)
  */
 template<char const * id_field_name, typename... Ts>
 class IdVariant<id_field_name, util::type_sequence<Ts...>, std::void_t<

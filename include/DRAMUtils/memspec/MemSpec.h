@@ -59,7 +59,7 @@
 #include "standards/MemSpecHBM3.h"
 #include "standards/MemSpecSTTMRAM.h"
 
-DEFINE_HAS_MEMBER(memoryType) // Required by util::IdVariant
+DRAMUTILS_DEFINE_IDFIELDNAME(memoryType) // Required by util::IdVariant
 
 namespace DRAMUtils::Config
 {

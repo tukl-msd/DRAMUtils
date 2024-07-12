@@ -112,7 +112,7 @@ struct is_id_const_string_view<type_sequence<Ts...>> :
 // Helper to check if T has a member with name membername
 template <const char* id_field_name, typename some_type>
 struct select_tag {static_assert(always_false<some_type>::value,
-    "Invalid tag or no select_tag defined. Use the macro DEFINE_HAS_MEMBER.");};
+    "Invalid tag or no select_tag defined. Use the macro DRAMUTILS_DEFINE_IDFIELDNAME.");};
 template <typename T, typename Tag, typename Enable = void>
 struct has_member : std::false_type {};
 /**
@@ -120,10 +120,10 @@ struct has_member : std::false_type {};
  *          The select_tag macro maps a const char * to a type. The has_member template
  *          checks if the member exists in the type T. The macro has to be used in the global namespace.
  * @param membername Name of the member to check
- * @note This macro defines a struct with the name containername and a member with the name membername.
- *          the membername can be accessed by the DRAMUtils::util::membername::name.
+ * @note This macro defines a struct with the name containername and a char member name with the vaule membername.
+ *          the membername can be accessed by DRAMUtils::util::membername::name.
  */
-#define DEFINE_HAS_MEMBER(membername) \
+#define DRAMUTILS_DEFINE_IDFIELDNAME(membername) \
     namespace DRAMUtils::util { \
     struct membername \
     { \
