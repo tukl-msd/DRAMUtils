@@ -67,6 +67,8 @@ template<char const * id_field_name, typename... Ts>
 class IdVariant<id_field_name, util::type_sequence<Ts...>>
 {
 private:
+    inline static const char* id_field_name_ = id_field_name;
+
     using VariantTypes = util::type_sequence<Ts...>;
     using Variant = util::type_sequence_id_variant_t<VariantTypes>;
     using Json = nlohmann::json;
@@ -80,7 +82,8 @@ private:
 
     template <typename... Types>
     bool variant_from_json_impl(const Json& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
-        return ((j.at(id_field_name).get<std::string_view>() == Types::id && (data = j.get<Types>(), true)) || ...);
+        const std::string& key = j.at(id_field_name_);
+        return (( key == Types::id && (data = j.get<Types>(), true)) || ...);
     }
 
 public:
