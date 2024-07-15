@@ -58,8 +58,6 @@
 #include "standards/MemSpecHBM3.h"
 #include "standards/MemSpecSTTMRAM.h"
 
-DRAMUTILS_DEFINE_IDFIELDNAME(memoryType) // Required by util::IdVariant
-
 namespace DRAMUtils::Config
 {
 
@@ -80,12 +78,12 @@ using VariantTypes = util::type_sequence<
     MemSpecSTTMRAM
 >;
 
-DRAMUTILS_DECLARE_IDVARIANT(MemSpecVariant, memoryType, VariantTypes)
+DRAMUTILS_DECLARE_IDVARIANT(MemSpecVariant, "memoryType", VariantTypes)
 
 // Simple MemSpecContainer
 struct MemSpecContainer
 {
-    DRAMUtils::Config::MemSpecVariant memspec;
+    MemSpecVariant memspec;
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
 

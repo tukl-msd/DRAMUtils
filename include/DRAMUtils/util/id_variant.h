@@ -41,39 +41,30 @@
 #include <utility>
 #include "types.h"
 #include "nlohmann/json.hpp"
-
 #define DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence) \
-    using VariantName = DRAMUtils::util::IdVariant<DRAMUtils::util::IDFieldName::name, VariantTypeSequence>;
+namespace detail { \
+    struct id_field_name_##VariantName { static constexpr char name[] = IDFieldName; }; \
+} \
+using VariantName = DRAMUtils::util::IdVariant<detail::id_field_name_##VariantName::name, VariantTypeSequence>;
 
 namespace DRAMUtils::util
 {
 
-// uses select_tag and has_member defined by macro DRAMUTILS_DEFINE_IDFIELDNAME
-template <char const * name, typename... Ts>
-struct has_no_member_with_name {
-    using tag = typename select_tag<name, void>::type;
-    static constexpr bool value = !(has_member<Ts, tag>::value || ...);
-};
-
-template <char const * id_field_name, typename Seq, typename Enable = void>
+template <char const * id_field_name, typename Seq>
 class IdVariant
 {
     static_assert(util::always_false<Seq>::value,
-"Variant Types cannot have a member named id_field_name or 
-DRAMUTILS_DEFINE_IDFIELDNAME macro is missing for the id_field_name"
-    );
+"IDVariant cannot be initialized. "
+"Check the unique id fields in the type_sequence.");
 };
 
 /**
  * @brief A variant that can be serialized to and from JSON with a field that determines the type.
- *          The macro call DRAMUTILS_DEFINE_IDFIELDNAME(id_field_name) in the global namespace is required for
- *          each different id_field_name used in the IdVariant. For an easier declaration use the macro
+ *          For an easier declaration use the macro 
  *          DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence)
  */
 template<char const * id_field_name, typename... Ts>
-class IdVariant<id_field_name, util::type_sequence<Ts...>, std::void_t<
-    std::enable_if_t<has_no_member_with_name<id_field_name, Ts...>::value>
->>
+class IdVariant<id_field_name, util::type_sequence<Ts...>>
 {
 private:
     using VariantTypes = util::type_sequence<Ts...>;
