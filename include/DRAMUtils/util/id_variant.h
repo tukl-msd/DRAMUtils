@@ -106,7 +106,6 @@ public:
     void to_json(Json& j) const {
         std::visit(
             [&j](const auto& v) {
-                // TODO Variant Types cannot have a member named id_field
                 j = v;
                 j[id_field_name] = v.id;
             },
