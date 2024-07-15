@@ -42,7 +42,7 @@
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
-namespace DRAMUtils::Config {
+namespace DRAMUtils::MemSpec {
 
 struct MemArchitectureSpecTypeWideIO
 {
@@ -97,6 +97,6 @@ struct MemSpecWideIO : BaseMemSpec
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecWideIO, memoryId, memarchitecturespec, memtimingspec)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECWIDEIO_H */

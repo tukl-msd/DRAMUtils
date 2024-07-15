@@ -43,7 +43,7 @@
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
-namespace DRAMUtils::Config {
+namespace DRAMUtils::MemSpec {
 
 struct MemArchitectureSpecTypeDDR4
 {
@@ -202,6 +202,6 @@ struct MemSpecDDR4 : BaseMemSpec
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecDDR4, memoryId, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec, prepostamble)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECDDR4_H */

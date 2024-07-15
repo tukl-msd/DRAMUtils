@@ -58,7 +58,7 @@
 #include "standards/MemSpecHBM3.h"
 #include "standards/MemSpecSTTMRAM.h"
 
-namespace DRAMUtils::Config
+namespace DRAMUtils::MemSpec
 {
 
 // Variant types
@@ -87,6 +87,6 @@ struct MemSpecContainer
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_MEMSPEC_H */

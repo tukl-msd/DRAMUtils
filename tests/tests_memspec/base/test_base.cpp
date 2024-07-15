@@ -17,8 +17,8 @@ class Memspec_Base_Test : public ::testing::Test {
 protected:
     // Test variables
     std::string_view path = "test.json";
-    Config::MemSpecContainer writeContainer;
-    Config::MemSpecContainer readContainer;
+    MemSpec::MemSpecContainer writeContainer;
+    MemSpec::MemSpecContainer readContainer;
 
     bool writeContainerToJsonFile()
     {
@@ -52,7 +52,7 @@ protected:
 
 TEST_F(Memspec_Base_Test, Test_0)
 {
-    using namespace DRAMUtils::Config;
+    using namespace DRAMUtils::MemSpec;
     // Write MemSpecContainer to file
     {
         MemSpecDDR3 memspec;

@@ -42,7 +42,7 @@
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
-namespace DRAMUtils::Config {
+namespace DRAMUtils::MemSpec {
 
 struct MemArchitectureSpecTypeGDDR5
 {
@@ -111,6 +111,6 @@ struct MemSpecGDDR5 : BaseMemSpec
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecGDDR5, memoryId, memarchitecturespec, memtimingspec)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECGDDR5_H */

@@ -42,7 +42,7 @@
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
-namespace DRAMUtils::Config {
+namespace DRAMUtils::MemSpec {
 
 struct MemArchitectureSpecTypeHBM3
 {
@@ -108,6 +108,6 @@ struct MemSpecHBM3 : BaseMemSpec
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecHBM3, memoryId, memarchitecturespec, memtimingspec)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECHBM3_H */

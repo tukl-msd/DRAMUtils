@@ -42,7 +42,7 @@
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
-namespace DRAMUtils::Config {
+namespace DRAMUtils::MemSpec {
 
 struct MemArchitectureSpecTypeSTTMRAM
 {
@@ -99,6 +99,6 @@ struct MemSpecSTTMRAM : BaseMemSpec
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecSTTMRAM, memoryId, memarchitecturespec, memtimingspec)
 
-} // namespace DRAMUtils::Config
+} // namespace DRAMUtils::MemSpec
 
 #endif /* DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECSTTMRAM_H */
