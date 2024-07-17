@@ -37,15 +37,13 @@
 ###############################################
 cmake_minimum_required(VERSION 3.14.0)
 
-set(PROJECT_NAME "DRAMUtils 1.0")
-set(PROJECT_SHORTNAME "DRAMUtils")
+set(PROJECT_NAME "DRAMUtils")
 
 project(${PROJECT_NAME} VERSION "1.0")
 
 ### CMake settings ###
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-include(build_source_group)
-include(diagnostics_print)
+include(build_source_group_include)
 include(enable_clang_format)
 include(enable_clang_tidy)
 include(enable_cppcheck)
@@ -96,7 +94,8 @@ if(DRAMUTILS_BUILD_TESTS)
     FetchContent_Declare(
 	    googletest
 	    GIT_REPOSITORY https://github.com/google/googletest
-		GIT_TAG release-1.12.1)
+		GIT_TAG release-1.12.1
+	)
 
     # For Windows: Prevent overriding the parent project's compiler/linker settings
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -111,7 +110,21 @@ endif()
 ###                 DRAMUtils               ###
 ###############################################
 
-include(dram_utils.cmake)
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ${DRAMUTILS_INCLUDE_DIR}/*.cpp)
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ${DRAMUTILS_INCLUDE_DIR}/*.h; ${DRAMUTILS_INCLUDE_DIR}/*.hpp)
+
+add_library(${PROJECT_NAME} INTERFACE) # ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+target_link_libraries(${PROJECT_NAME}
+    INTERFACE
+        nlohmann_json::nlohmann_json
+)
+
+add_library(DRAMUtils::DRAMUtils ALIAS ${PROJECT_NAME})
+add_library(DRAMSys::DRAMUtils ALIAS ${PROJECT_NAME})
+
+# build_source_group_include()
 
 ###############################################
 ###           Test Directory                ###
