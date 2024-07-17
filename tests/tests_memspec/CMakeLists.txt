@@ -18,5 +18,3 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 gtest_discover_tests(${PROJECT_NAME})
-
-build_source_group()
