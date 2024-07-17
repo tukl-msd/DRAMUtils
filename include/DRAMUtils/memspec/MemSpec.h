@@ -38,9 +38,9 @@
 
 #include <string>
 #include <variant>
-#include "DRAMUtils/util/json.h"
-#include "nlohmann/json.hpp"
 #include <iostream>
+
+#include "DRAMUtils/util/json.h"
 #include "DRAMUtils/util/types.h"
 #include "DRAMUtils/util/id_variant.h"
 
