@@ -89,4 +89,20 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
 
 } // namespace DRAMUtils::MemSpec
 
+namespace DRAMUtils {
+
+std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json_t& json, const std::string_view key = "memspec")
+{
+    if (!json.contains(key))
+        return std::nullopt;
+    
+    MemSpec::MemSpecVariant result;
+    if (!result.from_json(json.at(key)))
+        return std::nullopt;
+
+    return result;
+}
+
+} // namespace DRAMUtils
+
 #endif /* DRAMUTILS_MEMSPEC_MEMSPEC_H */
