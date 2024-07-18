@@ -26,3 +26,5 @@ cmake-build*
 .cache
 .env
 scripts/
+tests/tests_memspec/temp/*
+!tests/tests_memspec/temp/.gitkeep
