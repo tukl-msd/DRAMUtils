@@ -75,7 +75,7 @@ protected:
     }
 };
 
-TEST_F(Memspec_Base_Test, Test_IDVariant)
+TEST_F(Memspec_Base_Test, IDVariant)
 {
     writeContainer.memspec = createDummyMemSpec();
     ASSERT_TRUE(writeContainerToJsonFile());
@@ -83,7 +83,7 @@ TEST_F(Memspec_Base_Test, Test_IDVariant)
     compareMemSpec(readContainer.memspec);
 }
 
-TEST_F(Memspec_Base_Test, Test_HelperFunctions)
+TEST_F(Memspec_Base_Test, HelperFunctions)
 {
     using namespace DRAMUtils::MemSpec;
     std::optional<MemSpecVariant> variant_in;
