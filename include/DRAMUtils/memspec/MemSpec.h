@@ -118,7 +118,7 @@ struct keys
  * 
  * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
  */
-std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json_t& json, std::string_view key = detail::keys::memSpec)
+inline std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json_t& json, std::string_view key = detail::keys::memSpec)
 {
     try
     {
@@ -145,7 +145,7 @@ std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json_t& jso
  * 
  * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
  */
-std::optional<MemSpec::MemSpecVariant> parse_Memspec_from_buffer(std::string_view buffer, std::string_view key = detail::keys::memSpec)
+inline std::optional<MemSpec::MemSpecVariant> parse_Memspec_from_buffer(std::string_view buffer, std::string_view key = detail::keys::memSpec)
 {
     try
     {
@@ -167,7 +167,7 @@ std::optional<MemSpec::MemSpecVariant> parse_Memspec_from_buffer(std::string_vie
  * 
  * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
  */
-std::optional<MemSpec::MemSpecVariant> parse_memspec_from_file(const std::filesystem::path &path, std::string_view key = detail::keys::memSpec)
+inline std::optional<MemSpec::MemSpecVariant> parse_memspec_from_file(const std::filesystem::path &path, std::string_view key = detail::keys::memSpec)
 {
     try
     {
