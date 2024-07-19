@@ -39,6 +39,10 @@
 #include <string>
 #include <variant>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
+#include <optional>
+#include <string_view>
 
 #include "DRAMUtils/util/json.h"
 #include "DRAMUtils/util/types.h"
@@ -88,5 +92,101 @@ struct MemSpecContainer
 NLOHMANN_JSONIFY_ALL_THINGS(MemSpecContainer, memspec)
 
 } // namespace DRAMUtils::MemSpec
+
+namespace DRAMUtils {
+
+namespace detail
+{
+struct keys
+{
+    static constexpr char memSpec[] = "memspec";
+};
+
+};
+
+/**
+ * @brief Parses Memspec from JSON data into a MemSpecVariant object.
+ * 
+ * This function attempts to parse a MemSpecVariant object from JSON data. It first
+ * checks if the provided key exists in the JSON object; if found, it tries to extract
+ * and parse the corresponding JSON value into the MemSpecVariant. If no key is provided
+ * or the key is not found, it attempts to parse the entire JSON object directly.
+ * 
+ * @param json The json object containing the MemSpec data
+ * @param key Optional key to locate the MemSpec data in the json object.
+ *            Defaults to "memspec" if not provided.
+ * 
+ * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
+ */
+std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json_t& json, std::string_view key = detail::keys::memSpec)
+{
+    try
+    {
+        MemSpec::MemSpecVariant result;
+        if (!key.empty() && json.contains(key) && result.from_json(json.at(key)))
+            return result;
+        else if (result.from_json(json))
+            return result;
+    }
+    catch (std::exception&)
+    {
+    }
+
+    return std::nullopt;
+}
+
+/**
+ * @brief Parses Memspec from a string buffer into a MemSpecVariant object.
+ *        This function is a wrapper around parse_memspec_from_json.
+ * 
+ * @param buffer The string buffer containing the MemSpec data
+ * @param key Optional key to locate the MemSpec data in the json object.
+ *           Defaults to "memspec" if not provided.
+ * 
+ * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
+ */
+std::optional<MemSpec::MemSpecVariant> parse_Memspec_from_buffer(std::string_view buffer, std::string_view key = detail::keys::memSpec)
+{
+    try
+    {
+        return parse_memspec_from_json(json_t::parse(buffer), key);
+    }
+    catch (std::exception&)
+    {
+        return std::nullopt;
+    }
+}
+
+/**
+ * @brief Parses Memspec from a file into a MemSpecVariant object.
+ *       This function is a wrapper around parse_memspec_from_json.
+ * 
+ * @param path The path to the file containing the MemSpec data
+ * @param key Optional key to locate the MemSpec data in the json object.
+ *          Defaults to "memspec" if not provided.
+ * 
+ * @return An optional MemSpecVariant object if the JSON data was successfully parsed or std::nullopt otherwise.
+ */
+std::optional<MemSpec::MemSpecVariant> parse_memspec_from_file(const std::filesystem::path &path, std::string_view key = detail::keys::memSpec)
+{
+    try
+    {
+        if (!std::filesystem::exists(path))
+            return std::nullopt;
+
+        std::ifstream file(path);
+        if (!file.is_open())
+            return std::nullopt;
+
+        json_t json_obj = json_t::parse(file);
+        return parse_memspec_from_json(json_obj, key);
+    }
+    catch (std::exception&)
+    {
+        return std::nullopt;
+    }
+}
+
+} // namespace DRAMUtils
 
 #endif /* DRAMUTILS_MEMSPEC_MEMSPEC_H */
