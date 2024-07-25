@@ -90,7 +90,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeSTTMRAM, tCK, CKE, CKESR, RAS, RC, 
 
 struct MemSpecSTTMRAM : BaseMemSpec
 {
-    static constexpr inline const std::string_view id = "STTMRAM";
+    static constexpr inline const std::string_view id = "STT-MRAM";
     std::string memoryId;
 
     MemArchitectureSpecTypeSTTMRAM memarchitecturespec;
