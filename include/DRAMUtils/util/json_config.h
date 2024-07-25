@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, RPTU Kaiserslautern-Landau
+ * Copyright (c) 2024, RPTU Kaiserslautern-Landau
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * Authors:
- *    Thomas Psota
  *    Marco Mörz
  */
 
-#ifndef DRAMUTILS_UTIL_UTIL_H
-#define DRAMUTILS_UTIL_UTIL_H
+#ifndef DRAMUTILS_UTIL_JSON_CONFIG_H
+#define DRAMUTILS_UTIL_JSON_CONFIG_H
 
-namespace DRAMUtils::util
-{
-    
-    
-}
+#include "nlohmann/json.hpp"
 
-namespace nlohmann
-{
-    
-} // nlohmann
+using json_t = nlohmann::json;
 
-#endif /* DRAMUTILS_UTIL_UTIL_H */
+#endif /* DRAMUTILS_UTIL_JSON_CONFIG_H */
