@@ -40,7 +40,7 @@
 #include <string>
 #include <optional>
 
-#include "DRAMUtils/util/json.h"
+#include "DRAMUtils/util/json_utils.h"
 #include "DRAMUtils/memspec/BaseMemSpec.h"
 
 

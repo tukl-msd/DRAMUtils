@@ -40,10 +40,8 @@
 #include <string_view>
 #include <utility>
 
-#include "json_config.h"
-
-#include <DRAMUtils/util/json.h>
-#include <DRAMUtils/util/types.h>
+#include "json.h"
+#include "types.h"
 
 #define DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence) \
 namespace detail { \
@@ -75,17 +73,16 @@ private:
 
     using VariantTypes = util::type_sequence<Ts...>;
     using Variant = util::type_sequence_id_variant_t<VariantTypes>;
-    using Json = ::json_t;
     Variant variant;
 
 private:
     template <typename Seq>
-    bool variant_from_json(const Json& j, util::type_sequence_id_variant_t<Seq>& data) {
+    bool variant_from_json(const json_t& j, util::type_sequence_id_variant_t<Seq>& data) {
         return variant_from_json_impl(j, data, Seq{}); // Seq{} needed for type deduction
     }
 
     template <typename... Types>
-    bool variant_from_json_impl(const Json& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
+    bool variant_from_json_impl(const json_t& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
         const std::string& key = j.at(id_field_name_);
         return (( key == Types::id && (data = j.get<Types>(), true)) || ...);
     }
@@ -107,7 +104,7 @@ public:
     }
 
 public:
-    void to_json(Json& j) const {
+    void to_json(json_t& j) const {
         std::visit(
             [&j](const auto& v) {
                 j = v;
@@ -115,7 +112,7 @@ public:
             },
         variant);
     }
-    bool from_json(const Json& j) {
+    bool from_json(const json_t& j) {
         return variant_from_json<VariantTypes>(j, variant);
     }
 };
