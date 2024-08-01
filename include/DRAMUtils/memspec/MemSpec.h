@@ -44,7 +44,7 @@
 #include <optional>
 #include <string_view>
 
-#include "DRAMUtils/util/json.h"
+#include "DRAMUtils/util/json_utils.h"
 #include "DRAMUtils/util/types.h"
 #include "DRAMUtils/util/id_variant.h"
 

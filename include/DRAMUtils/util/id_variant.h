@@ -40,8 +40,8 @@
 #include <string_view>
 #include <utility>
 
-#include <DRAMUtils/util/json.h>
-#include <DRAMUtils/util/types.h>
+#include "json.h"
+#include "types.h"
 
 #define DRAMUTILS_DECLARE_IDVARIANT(VariantName, IDFieldName, VariantTypeSequence) \
 namespace detail { \
@@ -73,17 +73,16 @@ private:
 
     using VariantTypes = util::type_sequence<Ts...>;
     using Variant = util::type_sequence_id_variant_t<VariantTypes>;
-    using Json = ::json_t;
     Variant variant;
 
 private:
     template <typename Seq>
-    bool variant_from_json(const Json& j, util::type_sequence_id_variant_t<Seq>& data) {
+    bool variant_from_json(const json_t& j, util::type_sequence_id_variant_t<Seq>& data) {
         return variant_from_json_impl(j, data, Seq{}); // Seq{} needed for type deduction
     }
 
     template <typename... Types>
-    bool variant_from_json_impl(const Json& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
+    bool variant_from_json_impl(const json_t& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
         const std::string& key = j.at(id_field_name_);
         return (( key == Types::id && (data = j.get<Types>(), true)) || ...);
     }
@@ -105,7 +104,7 @@ public:
     }
 
 public:
-    void to_json(Json& j) const {
+    void to_json(json_t& j) const {
         std::visit(
             [&j](const auto& v) {
                 j = v;
@@ -113,130 +112,12 @@ public:
             },
         variant);
     }
-    bool from_json(const Json& j) {
+    bool from_json(const json_t& j) {
         return variant_from_json<VariantTypes>(j, variant);
     }
 };
 
-
-// Json helper functions
-
-template <const char* id_field_name, typename Seq>
-void id_variant_from_json(const nlohmann::json& j, IdVariant<id_field_name, Seq>& data, std::optional<std::string_view> key)
-{
-    if (key)
-    {
-        // Find key
-        const auto it = j.find(*key);
-        if (it != j.end())
-        {
-            // Key in json
-            if (!data.from_json(j[*key]))
-                throw std::bad_variant_access{};
-        }
-        else
-        {
-            // Key not in json
-            throw std::bad_variant_access{};
-        }
-    }
-    else {
-        // No key
-        if (!data.from_json(j))
-            throw std::bad_variant_access{};
-    }
-}
-
-template <const char* id_field_name, typename Seq>
-void id_variant_to_json(nlohmann::json& j, const IdVariant<id_field_name, Seq>& data, std::optional<std::string_view> key)
-{
-    if (key)
-        data.to_json(j[*key]);
-    else
-        data.to_json(j);
-
-}
-
-
-template <typename>
-constexpr bool is_id_variant = false;
-template <char const * id_field_name, typename Seq>
-constexpr bool is_id_variant<IdVariant<id_field_name, Seq>> = true;
-
-
-template <typename T> void extended_to_json(const char* key, nlohmann::json& j, const T& value)
-{
-    if constexpr (is_optional<T>)
-        optional_to_json(j, value, key);
-    else if constexpr (is_id_variant<T>)
-        id_variant_to_json(j, value, key);
-    else if constexpr (is_variant<T>)
-        variant_to_json(j, value);
-    else
-        j[key] = value;
-}
-
-template <typename T> void extended_from_json(const char* key, const nlohmann::json& j, T& value)
-{
-    if constexpr (is_optional<T>)
-        optional_from_json(j, value, key);
-    else if constexpr (is_id_variant<T>)
-        id_variant_from_json(j, value, key);
-    else if constexpr (is_variant<T>)
-        variant_from_json<T>(j, value);
-    else
-        j.at(key).get_to(value);
-}
-
-
 } // namespace DRAMUtils::util
-
-
-
-NLOHMANN_JSON_NAMESPACE_BEGIN
-
-template <typename... Ts> struct adl_serializer<std::variant<Ts...>>
-{
-    static void to_json(nlohmann::json& j, const std::variant<Ts...>& data)
-    {
-        DRAMUtils::util::variant_to_json<Ts...>(j, data);
-    }
-
-    static void from_json(const nlohmann::json& j, std::variant<Ts...>& data)
-    {
-        // Call variant_from_json for all types, only one will succeed
-        (DRAMUtils::util::variant_from_json<Ts>(j, data), ...);
-    }
-};
-
-
-template <const char * id_field_name, typename Seq> struct adl_serializer<DRAMUtils::util::IdVariant<id_field_name, Seq>>
-{
-    static void to_json(nlohmann::json& j, const DRAMUtils::util::IdVariant<id_field_name, Seq>& data)
-    {
-        DRAMUtils::util::id_variant_to_json<id_field_name, Seq>(j, data, std::nullopt);
-    }
-
-    static void from_json(const nlohmann::json& j, DRAMUtils::util::IdVariant<id_field_name, Seq>& data)
-    {
-        // Match variant by id
-        DRAMUtils::util::id_variant_from_json<id_field_name, Seq>(j, data, std::nullopt);
-    }
-};
-
-
-NLOHMANN_JSON_NAMESPACE_END
-
-// NOLINTBEGIN(cppcoreguidelines-macro-usage)
-
-#define EXTEND_JSON_TO(v1)                                                                         \
-    DRAMUtils::util::extended_to_json(#v1, nlohmann_json_j, nlohmann_json_t.v1);
-#define EXTEND_JSON_FROM(v1)                                                                       \
-    DRAMUtils::util::extended_from_json(#v1, nlohmann_json_j, nlohmann_json_t.v1);
-
-// NOLINTEND(cppcoreguidelines-macro-usage)
-
-
 
 
 #endif /* DRAMUTILS_UTIL_ID_VARIANT_H */
