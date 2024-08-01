@@ -130,6 +130,7 @@ inline std::optional<MemSpec::MemSpecVariant> parse_memspec_from_json(const json
     }
     catch (std::exception&)
     {
+        return std::nullopt;
     }
 
     return std::nullopt;
