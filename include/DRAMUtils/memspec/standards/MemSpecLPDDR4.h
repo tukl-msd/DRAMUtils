@@ -85,7 +85,6 @@ struct MemTimingSpecTypeLPDDR4
     uint64_t    RAS;
     uint64_t    RCD;
     uint64_t    RL;
-    uint64_t    REFM;
     uint64_t    REFI;
     uint64_t    REFIpb;
     uint64_t    RFCpb;
@@ -113,7 +112,7 @@ struct MemTimingSpecTypeLPDDR4
     uint64_t    XSR;
     uint64_t    RTRS;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR4, tCK, CKE, ESCKE, CMDCKE, RAS, RCD, RL, REFM, REFI, REFIpb, RFCpb, RFCab, RPpb, RPab, RCpb, RCab, PPD, FAW, RRD, CCD, CCDMW, RPST, DQSCK, RTP, WL, DQSS, DQS2DQ, WR, WPRE, WTR, XP, SR, XSR, RTRS)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR4, tCK, CKE, ESCKE, CMDCKE, RAS, RCD, RL, REFI, REFIpb, RFCpb, RFCab, RPpb, RPab, RCpb, RCab, PPD, FAW, RRD, CCD, CCDMW, RPST, DQSCK, RTP, WL, DQSS, DQS2DQ, WR, WPRE, WTR, XP, SR, XSR, RTRS)
 
 enum class pasrModesType {
     PASR_0,
