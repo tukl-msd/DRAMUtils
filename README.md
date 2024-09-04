@@ -61,7 +61,7 @@ DRAMUtils comes bundled with all necessary libraries (nlohmann_json) and no inst
 
 Further questions about the library or the tools based on DRAMUtils can be directed at:
 
-Matthias Jung (matthias.jung@iese.fraunhofer.de)
+[DRAMSys@iese.fraunhofer.de](mailto:DRAMSys@iese.fraunhofer.de)
 
 Feel free to ask for updates to the tool's features and please do report any bugs
 and errors you encounter. This will encourage us to continuously improve the tool.
