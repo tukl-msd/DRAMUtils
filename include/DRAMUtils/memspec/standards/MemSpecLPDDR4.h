@@ -39,6 +39,7 @@
 #include <string_view>
 #include <string>
 #include <optional>
+#include <vector>
 #include "DRAMUtils/util/json_utils.h"
 
 #include "DRAMUtils/memspec/BaseMemSpec.h"
@@ -61,20 +62,55 @@ struct MemArchitectureSpecTypeLPDDR4
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeLPDDR4, nbrOfChannels, nbrOfDevices, nbrOfRanks, nbrOfBanks, nbrOfBankGroups, nbrOfRows, nbrOfColumns, burstLength, dataRate, width, maxBurstLength)
 
-struct MemImpedanceSpecTypeLPDDR4 {
-    double C_total_ck;
-    double C_total_cb;
-    double C_total_rb;
-    double C_total_wb;
-    double C_total_dqs;
-
-    double R_eq_ck;
-    double R_eq_cb;
-    double R_eq_rb;
-    double R_eq_wb;
-    double R_eq_dqs;
+struct MemDynamicPowerCapcitancePairType {
+    double capacity;
+    double swing;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR4, C_total_ck, C_total_cb, C_total_rb, C_total_wb, C_total_dqs, R_eq_ck, R_eq_cb, R_eq_rb, R_eq_wb, R_eq_dqs)
+NLOHMANN_JSONIFY_ALL_THINGS(MemDynamicPowerCapcitancePairType, capacity, swing)
+
+// Line capcity is calculated seperately
+struct MemDynamicPowerType {
+    std::vector<MemDynamicPowerCapcitancePairType> capacities;
+    double lineImpedance;
+    double riseTime;
+    double flightTime;
+    double lineSwing;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemDynamicPowerType, capacities, lineImpedance, riseTime, lineSwing)
+
+enum class TerminationScheme {
+    OPEN_DRAIN_PULL_UP = 0,
+    OPEN_DRAIN_PULL_DOWN = 1,
+    PUSH_PULL = 2,
+    Invalid = -1
+};
+NLOHMANN_JSON_SERIALIZE_ENUM(TerminationScheme,
+                             {{TerminationScheme::Invalid, nullptr},
+                              {TerminationScheme::OPEN_DRAIN_PULL_UP, "ODPU"},
+                              {TerminationScheme::OPEN_DRAIN_PULL_DOWN, "ODPD"},
+                              {TerminationScheme::PUSH_PULL, "PP"}})
+
+struct MemStaticPowerType {
+    double R_ON;
+    double R_TT;
+    TerminationScheme termination;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemStaticPowerType, R_ON, R_TT, termination)
+
+struct MemImpedanceSpecTypeLPDDR4 {
+    MemDynamicPowerType dynamic_ck;
+    MemDynamicPowerType dynamic_cb;
+    MemDynamicPowerType dynamic_rb;
+    MemDynamicPowerType dynamic_wb;
+    MemDynamicPowerType dynamic_dqs;
+
+    MemStaticPowerType static_ck;
+    MemStaticPowerType static_cb;
+    MemStaticPowerType static_rb;
+    MemStaticPowerType static_wb;
+    MemStaticPowerType static_dqs;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR4, dynamic_ck, dynamic_cb, dynamic_rb, dynamic_wb, dynamic_dqs, static_ck, static_cb, static_rb, static_wb, static_dqs)
 
 struct MemTimingSpecTypeLPDDR4
 {
