@@ -212,8 +212,17 @@ struct MemImpedanceSpecTypeDDR5 {
     bool wdqs_termination;
     double wdqs_R_eq;
     double wdqs_dyn_E;
+
+    // DBI read
+    bool rdbi_termination;
+    double rdbi_R_eq;
+    double rdbi_dyn_E;
+    // DBI write
+    bool wdbi_termination;
+    double wdbi_R_eq;
+    double wdbi_dyn_E;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeDDR5, ck_termination, ck_R_eq, ck_dyn_E, ca_termination, ca_R_eq, ca_dyn_E, rdq_termination, rdq_R_eq, rdq_dyn_E, wdq_termination, wdq_R_eq, wdq_dyn_E, rdqs_termination, rdqs_R_eq, rdqs_dyn_E, wdqs_termination, wdqs_R_eq, wdqs_dyn_E)
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeDDR5, ck_termination, ck_R_eq, ck_dyn_E, ca_termination, ca_R_eq, ca_dyn_E, rdq_termination, rdq_R_eq, rdq_dyn_E, wdq_termination, wdq_R_eq, wdq_dyn_E, rdqs_termination, rdqs_R_eq, rdqs_dyn_E, wdqs_termination, wdqs_R_eq, wdqs_dyn_E, rdbi_termination, rdbi_R_eq, rdbi_dyn_E, wdbi_termination, wdbi_R_eq, wdbi_dyn_E)
 
 struct DataRateSpecTypeDDR5 {
     uint64_t ca_bus_rate;
