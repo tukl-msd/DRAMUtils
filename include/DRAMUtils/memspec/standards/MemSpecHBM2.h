@@ -36,6 +36,7 @@
 #ifndef DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECHBM2_H
 #define DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECHBM2_H
 
+#include <optional>
 #include "DRAMUtils/util/json_utils.h"
 #include <string>
 #include <string_view>
@@ -135,15 +136,104 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM2,
                             REFI,
                             REFISB)
 
+struct MemPowerSpecTypeHBM2
+{
+    double vdd;
+    double idd0;
+    double idd2n;
+    double idd3n;
+    double idd4r;
+    double idd4w;
+    double idd6n;
+    double idd2p;
+    double idd3p;
+
+    double vpp;
+    double ipp0;
+    double ipp2n;
+    double ipp3n;
+    double ipp4r;
+    double ipp4w;
+    double ipp6n;
+    double ipp2p;
+    double ipp3p;
+    
+    double idd5b;
+    double idd5bpb;
+    double ipp5b;
+    double ipp5bpb;
+    
+    double vddq;
+    
+    std::optional<double> iBeta_vdd;
+    std::optional<double> iBeta_vpp;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeHBM2, vdd, idd0, idd2n, idd3n, idd4r, idd4w, idd6n, idd2p, idd3p, vpp, ipp0, ipp2n, ipp3n, ipp4r, ipp4w, ipp6n, ipp2p, ipp3p, idd5b, idd5bpb, ipp5b, ipp5bpb, vddq, iBeta_vdd, iBeta_vpp)
+
+struct BankWiseSpecTypeHBM2
+{
+    std::optional<double> factRho;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(BankWiseSpecTypeHBM2, factRho)
+
+struct MemImpedanceSpecTypeHBM2 {
+    // Clock
+    bool ck_termination;
+    double ck_R_eq;
+    double ck_dyn_E;
+
+    // Clock Enable
+    bool cke_termination;
+    double cke_R_eq;
+    double cke_dyn_E;
+
+    // Commandbus
+    bool ca_termination;
+    double ca_R_eq;
+    double ca_dyn_E;
+
+    // Data bus read
+    bool rdq_termination;
+    double rdq_R_eq;
+    double rdq_dyn_E;
+    // Data bus write
+    bool wdq_termination;
+    double wdq_R_eq;
+    double wdq_dyn_E;
+
+    // DQS read
+    bool rdqs_termination;
+    double rdqs_R_eq;
+    double rdqs_dyn_E;
+    // DQS write
+    bool wdqs_termination;
+    double wdqs_R_eq;
+    double wdqs_dyn_E;
+
+    // DBI read
+    bool rdbi_termination;
+    double rdbi_R_eq;
+    double rdbi_dyn_E;
+    // DBI write
+    bool wdbi_termination;
+    double wdbi_R_eq;
+    double wdbi_dyn_E;
+};
+NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeHBM2, ck_termination, ck_R_eq, ck_dyn_E, cke_termination, cke_R_eq, cke_dyn_E, ca_termination, ca_R_eq, ca_dyn_E, rdq_termination, rdq_R_eq, rdq_dyn_E, wdq_termination, wdq_R_eq, wdq_dyn_E, rdqs_termination, rdqs_R_eq, rdqs_dyn_E, wdqs_termination, wdqs_R_eq, wdqs_dyn_E, rdbi_termination, rdbi_R_eq, rdbi_dyn_E, wdbi_termination, wdbi_R_eq, wdbi_dyn_E)
+
 struct MemSpecHBM2
 {
     static constexpr inline const std::string_view id = "HBM2";
     std::string memoryId;
 
     MemArchitectureSpecTypeHBM2 memarchitecturespec;
+    MemPowerSpecTypeHBM2 mempowerspec;
     MemTimingSpecTypeHBM2 memtimingspec;
+    std::optional<BankWiseSpecTypeHBM2> bankwisespec;
+    MemImpedanceSpecTypeHBM2 memimpedancespec;
+
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemSpecHBM2, memoryId, memarchitecturespec, memtimingspec)
+NLOHMANN_JSONIFY_ALL_THINGS(MemSpecHBM2, memoryId, memarchitecturespec, mempowerspec, memtimingspec, bankwisespec, memimpedancespec)
 
 } // namespace DRAMUtils::MemSpec
 
