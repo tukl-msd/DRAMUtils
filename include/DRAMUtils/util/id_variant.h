@@ -112,9 +112,11 @@ public:
 
     // Compile time check for MemSpec type
     template <typename T>
-    void setVariant(T&& variant) {
-        static_assert(util::is_one_of<std::decay_t<T>, VariantTypes>::value, "Invalid Variant type!");
-        this->variant = std::forward<T>(variant);
+    void setVariant(T&& variantEntry) {
+        using U = std::decay_t<T>;
+        static_assert(util::is_one_of<U, VariantTypes>::value, "Invalid Variant type!");
+        // Forwarding
+        this->variant.template emplace<U>(std::forward<T>(variantEntry));
     }
 
     const Variant& getVariant() const {
