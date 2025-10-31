@@ -106,7 +106,12 @@ if (DRAMUTILS_USE_FETCH_CONTENT)
     include(FetchContent)
 
     if(DRAMUTILS_USE_FETCH_CONTENT_NLOHMANN_JSON)
-        add_subdirectory(${DRAMUTILS_LIBRARY_DIR}/nlohmann_json)
+        FetchContent_Declare(nlohmann_json
+            URL "https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz"
+            OVERRIDE_FIND_PACKAGE
+        )
+
+        FetchContent_MakeAvailable(nlohmann_json)
     endif()
 endif()
 
