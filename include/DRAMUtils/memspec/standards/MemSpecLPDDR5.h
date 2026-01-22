@@ -136,12 +136,16 @@ struct MemTimingSpecTypeLPDDR5
     uint64_t    BL_n_S_32;
     uint64_t    WTR_L;
     uint64_t    WTR_S;
+    uint64_t    RTW_L_32;
+    uint64_t    RTW_L_16;
+    uint64_t    RTW_S_32;
+    uint64_t    RTW_S_16;
     uint64_t    WCK2DQO;
     uint64_t    WCK2CK;
     uint64_t    pbR2act;
     uint64_t    pbR2pbR;
 };
-NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR5, tCK, REFI, REFIpb, RFCab, RFCpb, RAS, RPab, RPpb, RCpb, RCab, PPD, RCD_L, RCD_S, FAW, RRD, RL, RBTP, WL, WR, RTRS, BL_n_min_16, BL_n_max_16, BL_n_L_16, BL_n_S_16, BL_n_min_32, BL_n_max_32, BL_n_L_32, BL_n_S_32, WTR_L, WTR_S, WCK2DQO, WCK2CK, pbR2act, pbR2pbR)
+NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR5, tCK, REFI, REFIpb, RFCab, RFCpb, RAS, RPab, RPpb, RCpb, RCab, PPD, RCD_L, RCD_S, FAW, RRD, RL, RBTP, WL, WR, RTRS, BL_n_min_16, BL_n_max_16, BL_n_L_16, BL_n_S_16, BL_n_min_32, BL_n_max_32, BL_n_L_32, BL_n_S_32, WTR_L, WTR_S, RTW_L_32, RTW_L_16, RTW_S_32, RTW_S_16, WCK2DQO, WCK2CK, pbR2act, pbR2pbR)
 
 struct BankWiseSpecTypeLPDDR5
 {
