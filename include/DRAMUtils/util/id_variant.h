@@ -60,6 +60,13 @@ class IdVariant
 "Check the unique id fields in the type_sequence.");
 };
 
+// Helper to identify IdVariant types
+template <typename T> struct is_id_variant_impl : std::false_type {};
+template <char const* N, typename S> struct is_id_variant_impl<IdVariant<N, S>> : std::true_type {};
+
+template <typename T>
+inline constexpr bool is_id_variant_v = is_id_variant_impl<std::decay_t<T>>::value;
+
 /**
  * @brief A variant that can be serialized to and from JSON with a field that determines the type.
  *          For an easier declaration use the macro 
@@ -82,9 +89,11 @@ private:
     }
 
     template <typename... Types>
-    bool variant_from_json_impl(const json_t& j, util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data, util::type_sequence<Types...>) {
-        const std::string& key = j.at(id_field_name_);
-        return (( key == Types::id && (data = j.get<Types>(), true)) || ...);
+    bool variant_from_json_impl(const json_t& j, 
+                           util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data,
+                           util::type_sequence<Types...>) {
+        const std::string& key = j.at(id_field_name_).template get<std::string>();
+        return (( key == Types::id && (data = j.template get<Types>(), true)) || ...);
     }
 
 public:
@@ -100,13 +109,15 @@ public:
     IdVariant& operator=(IdVariant&&) noexcept = default;
 
     // Explicit forward constructor
-    template <typename T, typename = std::enable_if_t<!std::is_same_v<std::decay_t<T>, IdVariant> || std::is_lvalue_reference_v<T>>>
+    template <typename T, std::enable_if_t<!is_id_variant_v<T> &&
+                          util::is_one_of<std::decay_t<T>, VariantTypes>::value,
+                          int> = 0>
     explicit IdVariant(T&& variant) {
         setVariant(std::forward<T>(variant));
     }
 
     // Compile time check for MemSpec type
-    template<typename T>
+    template <typename T>
     void setVariant(T&& variant) {
         static_assert(util::is_one_of<std::decay_t<T>, VariantTypes>::value, "Invalid Variant type!");
         this->variant = std::forward<T>(variant);
