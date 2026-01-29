@@ -36,6 +36,7 @@
 #ifndef DRAMUTILS_UTIL_ID_VARIANT_H
 #define DRAMUTILS_UTIL_ID_VARIANT_H
 
+#include <type_traits>
 #include <variant>
 #include <string_view>
 #include <utility>
@@ -59,13 +60,6 @@ class IdVariant
 "IDVariant cannot be initialized. "
 "Check the unique id fields in the type_sequence.");
 };
-
-// Helper to identify IdVariant types
-template <typename T> struct is_id_variant_impl : std::false_type {};
-template <char const* N, typename S> struct is_id_variant_impl<IdVariant<N, S>> : std::true_type {};
-
-template <typename T>
-inline constexpr bool is_id_variant_v = is_id_variant_impl<std::decay_t<T>>::value;
 
 /**
  * @brief A variant that can be serialized to and from JSON with a field that determines the type.
@@ -109,7 +103,7 @@ public:
     IdVariant& operator=(IdVariant&&) noexcept = default;
 
     // Explicit forward constructor
-    template <typename T, std::enable_if_t<!is_id_variant_v<T> &&
+    template <typename T, std::enable_if_t<
                           util::is_one_of<std::decay_t<T>, VariantTypes>::value,
                           int> = 0>
     explicit IdVariant(T&& variant) {
