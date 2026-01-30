@@ -104,6 +104,17 @@ public:
     IdVariant& operator=(IdVariant&&)
       noexcept(std::is_nothrow_move_assignable_v<Variant>) = default;
 
+    // Forward assignment operator
+    template<typename T, std::enable_if_t<
+        util::is_one_of<std::decay_t<T>, VariantTypes>::value,
+        int> = 0>
+    IdVariant& operator=(T&& value)
+        noexcept(std::is_nothrow_assignable_v<Variant, T&&>)
+    {
+        variant = std::forward<T>(value);
+        return *this;
+    }
+
     // Explicit forward constructor
     template <typename T, std::enable_if_t<
                           util::is_one_of<std::decay_t<T>, VariantTypes>::value,
