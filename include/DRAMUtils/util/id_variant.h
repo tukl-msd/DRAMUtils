@@ -96,11 +96,13 @@ public:
 
     // copy/move constructors
     IdVariant(const IdVariant&) = default;
-    IdVariant(IdVariant&&) noexcept = default;
+    IdVariant(IdVariant&&)
+      noexcept(std::is_nothrow_move_constructible_v<Variant>) = default;
 
     // copy/move assignment
     IdVariant& operator=(const IdVariant&) = default;
-    IdVariant& operator=(IdVariant&&) noexcept = default;
+    IdVariant& operator=(IdVariant&&)
+      noexcept(std::is_nothrow_move_assignable_v<Variant>) = default;
 
     // Explicit forward constructor
     template <typename T, std::enable_if_t<
