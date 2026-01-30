@@ -118,8 +118,13 @@ public:
     void setVariant(T&& variantEntry) {
         using U = std::decay_t<T>;
         static_assert(util::is_one_of<U, VariantTypes>::value, "Invalid Variant type!");
-        // Forwarding
-        this->variant.template emplace<U>(std::forward<T>(variantEntry));
+        if constexpr (std::is_nothrow_constructible_v<U, T&&>) {
+            // Forwarding
+            this->variant.template emplace<U>(std::forward<T>(variantEntry));
+        } else {
+            // Strong Exception Guarantee if the constructor throws
+            this->variant = std::forward<T>(variantEntry);
+        }
     }
 
     const Variant& getVariant() const {
