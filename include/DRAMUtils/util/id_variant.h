@@ -108,9 +108,10 @@ public:
     template <typename T, std::enable_if_t<
                           util::is_one_of<std::decay_t<T>, VariantTypes>::value,
                           int> = 0>
-    explicit IdVariant(T&& variant) {
-        setVariant(std::forward<T>(variant));
-    }
+    explicit IdVariant(T&& value) 
+        noexcept(std::is_nothrow_constructible_v<Variant, T&&>)
+        : variant(std::forward<T>(value))
+    {}
 
     // Compile time check for MemSpec type
     template <typename T>
