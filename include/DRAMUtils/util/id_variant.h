@@ -78,12 +78,12 @@ private:
 
 private:
     template <typename Seq>
-    bool variant_from_json(const json_t& j, util::type_sequence_id_variant_t<Seq>& data) {
+    static bool variant_from_json(const json_t& j, util::type_sequence_id_variant_t<Seq>& data) {
         return variant_from_json_impl(j, data, Seq{}); // Seq{} needed for type deduction
     }
 
     template <typename... Types>
-    bool variant_from_json_impl(const json_t& j, 
+    static bool variant_from_json_impl(const json_t& j, 
                            util::type_sequence_id_variant_t<util::type_sequence<Types...>>& data,
                            util::type_sequence<Types...>) {
         const std::string& key = j.at(id_field_name_).template get<std::string>();
