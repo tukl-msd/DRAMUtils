@@ -41,7 +41,6 @@
 #include <optional>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -203,7 +202,7 @@ struct MemPowerSpecTypeLPDDR4
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR4, vdd1, idd01, idd2n1, idd3n1, idd4r1, idd4w1, idd51, idd5pb1, idd61, idd2p1, idd3p1, vdd2, idd02, idd2n2, idd3n2, idd4r2, idd4w2, idd52, idd5pb2, idd62, idd2p2, idd3p2, vddq, iBeta_vdd1, iBeta_vdd2)
 
-struct MemSpecLPDDR4 : BaseMemSpec
+struct MemSpecLPDDR4
 {
     static constexpr inline const std::string_view id = "LPDDR4";
     std::string memoryId;

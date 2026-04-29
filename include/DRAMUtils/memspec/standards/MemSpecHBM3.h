@@ -42,7 +42,6 @@
 
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -101,7 +100,7 @@ struct MemTimingSpecTypeHBM3
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM3, tCK, DQSCK, RC, RAS, RCDRD, RCDWR, RRDL, RRDS, FAW, RTP, RP, RL, WL, PL, WR, CCDL, CCDS, CCDR, WTRL, WTRS, RTW, XP, CKE, XS, RFC, RFCPB, RREFD, REFI, REFIPB, PPD)
 
-struct MemSpecHBM3 : BaseMemSpec
+struct MemSpecHBM3
 {
     static constexpr inline const std::string_view id = "HBM3";
     std::string memoryId;

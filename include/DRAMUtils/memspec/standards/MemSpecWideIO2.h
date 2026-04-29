@@ -40,7 +40,6 @@
 #include <string>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -91,7 +90,7 @@ struct MemTimingSpecTypeWideIO2
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeWideIO2, tCK, DQSCK, DQSS, CKE, RL, WL, RCPB, RCAB, CKESR, XSR, XP, CCD, RTP, RCD, RPPB, RPAB, RAS, WR, WTR, RRD, FAW, REFI, REFM, REFIPB, RFCAB, RFCPB, RTRS)
 
-struct MemSpecWideIO2 : BaseMemSpec
+struct MemSpecWideIO2
 {
     static constexpr inline const std::string_view id = "WIDEIO2";
     std::string memoryId;

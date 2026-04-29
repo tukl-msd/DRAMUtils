@@ -41,7 +41,6 @@
 #include <optional>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -222,7 +221,7 @@ struct DataRateSpecTypeDDR5 {
 };
 NLOHMANN_JSONIFY_ALL_THINGS(DataRateSpecTypeDDR5, ca_bus_rate, dq_bus_rate, dqs_bus_rate)
 
-struct MemSpecDDR5 : BaseMemSpec
+struct MemSpecDDR5
 {
     static constexpr inline const std::string_view id = "DDR5";
     std::string memoryId;

@@ -40,7 +40,6 @@
 #include <string>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -88,7 +87,7 @@ struct MemTimingSpecTypeSTTMRAM
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeSTTMRAM, tCK, CKE, CKESR, RAS, RC, RCD, RL, RTP, WL, WR, XP, XS, RP, DQSCK, CCD, FAW, RRD, WTR, XPDLL, XSDLL, AL, ACTPDEN, PRPDEN, RTRS)
 
-struct MemSpecSTTMRAM : BaseMemSpec
+struct MemSpecSTTMRAM
 {
     static constexpr inline const std::string_view id = "STT-MRAM";
     std::string memoryId;

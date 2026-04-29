@@ -11,7 +11,6 @@ PUBLIC
 TYPE HEADERS
 FILES
     DRAMUtils/config/toggling_rate.h
-    DRAMUtils/memspec/BaseMemSpec.h
     DRAMUtils/memspec/MemSpec.h
     DRAMUtils/memspec/standards/MemSpecDDR3.h
     DRAMUtils/memspec/standards/MemSpecDDR4.h

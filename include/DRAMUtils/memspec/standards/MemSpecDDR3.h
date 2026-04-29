@@ -41,7 +41,6 @@
 #include <optional>
 
 #include "DRAMUtils/util/json_utils.h"
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 
 namespace DRAMUtils::MemSpec {
@@ -93,7 +92,7 @@ struct MemTimingSpecDDR3
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecDDR3, tCK, CKE, CKESR, RAS, RC, RCD, RL, RTP, WL, WR, XP, XS, REFI, RFC, RP, DQSCK, CCD, FAW, RRD, WTR, XPDLL, XSDLL, AL, ACTPDEN, PRPDEN, REFPDEN, RTRS)
 
-struct MemSpecDDR3 : BaseMemSpec
+struct MemSpecDDR3
 {
     static constexpr inline const std::string_view id = "DDR3";
 

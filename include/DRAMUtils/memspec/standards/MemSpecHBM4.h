@@ -41,12 +41,11 @@
 
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 #include "DRAMUtils/memspec/standards/MemSpecHBM3.h"
 
 namespace DRAMUtils::MemSpec {
 
-struct MemSpecHBM4 : BaseMemSpec
+struct MemSpecHBM4
 {
     static constexpr inline const std::string_view id = "HBM4";
     std::string memoryId;

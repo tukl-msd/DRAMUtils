@@ -41,7 +41,6 @@
 #include <optional>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -226,7 +225,7 @@ struct MemImpedanceSpecTypeDDR4 {
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeDDR4, ck_termination, ck_R_eq, ck_dyn_E, ca_termination, ca_R_eq, ca_dyn_E, rdq_termination, rdq_R_eq, rdq_dyn_E, wdq_termination, wdq_R_eq, wdq_dyn_E, rdqs_termination, rdqs_R_eq, rdqs_dyn_E, wdqs_termination, wdqs_R_eq, wdqs_dyn_E, rdbi_termination, rdbi_R_eq, rdbi_dyn_E, wdbi_termination, wdbi_R_eq, wdbi_dyn_E)
 
-struct MemSpecDDR4 : BaseMemSpec
+struct MemSpecDDR4
 {
     static constexpr inline const std::string_view id = "DDR4";
     std::string memoryId;

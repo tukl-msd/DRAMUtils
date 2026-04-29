@@ -40,7 +40,6 @@
 #include <string>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -103,7 +102,7 @@ struct MemTimingSpecTypeGDDR6
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeGDDR6, tCK, RP, RAS, RC, RCDRD, RCDWR, RTP, RRDS, RRDL, CCDS, CCDL, RL, WCK2CKPIN, WCK2CK, WCK2DQO, RTW, WL, WCK2DQI, WR, WTRS, WTRL, PD, CKESR, XP, REFI, REFIpb, RFCab, RFCpb, RREFD, XS, FAW, PPD, LK, ACTPDE, PREPDE, REFPDE, RTRS)
 
-struct MemSpecGDDR6 : BaseMemSpec
+struct MemSpecGDDR6
 {
     static constexpr inline const std::string_view id = "GDDR6";
     std::string memoryId;

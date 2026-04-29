@@ -40,7 +40,6 @@
 #include <string>
 #include "DRAMUtils/util/json_utils.h"
 
-#include "DRAMUtils/memspec/BaseMemSpec.h"
 
 namespace DRAMUtils::MemSpec {
 
@@ -95,7 +94,7 @@ struct MemTimingSpecTypeHBM2
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeHBM2, tCK, DQSCK, RC, RAS, RCDRD, RCDWR, RRDL, RRDS, FAW, RTP, RP, RL, WL, PL, WR, CCDL, CCDS, CCDR, WTRL, WTRS, RTW, XP, CKE, XS, RFC, RFCSB, RREFD, REFI, REFISB)
 
-struct MemSpecHBM2 : BaseMemSpec
+struct MemSpecHBM2
 {
     static constexpr inline const std::string_view id = "HBM2";
     std::string memoryId;
