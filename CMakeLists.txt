@@ -28,9 +28,10 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Author: 
+# Author:
 #   Thomas Psota
 #   Marco Mörz
+#   Derek Christ
 
 ###############################################
 ###              DRAMUtils 1.0              ###
@@ -77,6 +78,7 @@ set(DRAMUTILS_TEST_DIR    "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 
 ### Build options ###
 option(DRAMUTILS_BUILD_TESTS "Build DRAMUtils unit tests" ${PROJECT_IS_TOP_LEVEL})
+option(DRAMUTILS_INSTALL "Install DRAMUtils" OFF)
 
 
 ### Compiler optimization settings ###
@@ -121,7 +123,89 @@ find_package(nlohmann_json REQUIRED)
 ###                 DRAMUtils               ###
 ###############################################
 
-add_subdirectory(include)
+add_library(DRAMUtils INTERFACE)
+add_library(DRAMUtils::DRAMUtils ALIAS DRAMUtils)
+
+target_include_directories(DRAMUtils
+    INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(DRAMUtils
+    INTERFACE
+        nlohmann_json::nlohmann_json
+)
+
+target_compile_features(DRAMUtils INTERFACE cxx_std_17)
+set_target_properties(DRAMUtils PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(DRAMUtils PROPERTIES CXX_STANDARD_REQUIRED ON)
+
+target_sources(DRAMUtils
+    PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS include
+        FILES
+            include/DRAMUtils/config/toggling_rate.h
+            include/DRAMUtils/memspec/MemSpec.h
+            include/DRAMUtils/memspec/standards/MemSpecDDR3.h
+            include/DRAMUtils/memspec/standards/MemSpecDDR4.h
+            include/DRAMUtils/memspec/standards/MemSpecDDR5.h
+            include/DRAMUtils/memspec/standards/MemSpecGDDR5.h
+            include/DRAMUtils/memspec/standards/MemSpecGDDR5X.h
+            include/DRAMUtils/memspec/standards/MemSpecGDDR6.h
+            include/DRAMUtils/memspec/standards/MemSpecHBM2.h
+            include/DRAMUtils/memspec/standards/MemSpecHBM3_4.h
+            include/DRAMUtils/memspec/standards/MemSpecLPDDR4.h
+            include/DRAMUtils/memspec/standards/MemSpecLPDDR5.h
+            include/DRAMUtils/memspec/standards/MemSpecLPDDR6.h
+            include/DRAMUtils/memspec/standards/MemSpecSTTMRAM.h
+            include/DRAMUtils/memspec/standards/MemSpecWideIO.h
+            include/DRAMUtils/memspec/standards/MemSpecWideIO2.h
+            include/DRAMUtils/util/collapsingvector.h
+            include/DRAMUtils/util/id_variant.h
+            include/DRAMUtils/util/json.h
+            include/DRAMUtils/util/json_utils.h
+            include/DRAMUtils/util/types.h
+)
+
+if (DRAMUTILS_INSTALL)
+    include(GNUInstallDirs)
+    include(CMakePackageConfigHelpers)
+
+    install(
+        TARGETS DRAMUtils
+        EXPORT  DRAMUtilsTargets
+        FILE_SET HEADERS
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+
+    install(
+        EXPORT DRAMUtilsTargets
+        FILE DRAMUtilsTargets.cmake
+        NAMESPACE DRAMUtils::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DRAMUtils
+    )
+
+    configure_package_config_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/DRAMUtilsConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/DRAMUtilsConfig.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DRAMUtils
+    )
+
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/DRAMUtilsConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
+    )
+
+    install(
+        FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/DRAMUtilsConfig.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/DRAMUtilsConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/DRAMUtils
+    )
+endif()
 
 ###############################################
 ###           Test Directory                ###

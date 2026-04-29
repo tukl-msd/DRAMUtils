@@ -10,12 +10,8 @@ if (DRAMUTILS_USE_FETCH_CONTENT)
             OVERRIDE_FIND_PACKAGE
         )
         set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        set(INSTALL_GTEST OFF)
         FetchContent_MakeAvailable(GTest)
-        # TODO: Necessary target properties?
-        set_target_properties(gmock PROPERTIES FOLDER lib)
-        set_target_properties(gmock_main PROPERTIES FOLDER lib)
-        set_target_properties(gtest PROPERTIES FOLDER lib)
-        set_target_properties(gtest_main PROPERTIES FOLDER lib)
     endif()
 endif()
 
