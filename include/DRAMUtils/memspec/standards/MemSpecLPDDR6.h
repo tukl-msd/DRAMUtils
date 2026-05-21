@@ -256,43 +256,43 @@ struct MemPowerSpecTypeLPDDR6
     double idd4r1;
     double idd4w1;
     double idd51;
-    double idd5pb1;
+    double idd5pdb1;
     double idd61;
     double idd6ds1;
     double idd2p1;
     double idd3p1;
-
-    double vdd2h;
-    double idd02h;
-    double idd2n2h;
-    double idd3n2h;
-    double idd4r2h;
-    double idd4w2h;
-    double idd52h;
-    double idd5pb2h;
-    double idd62h;
-    double idd6ds2h;
-    double idd2p2h;
-    double idd3p2h;
-
-    double vdd2l;
-    double idd02l;
-    double idd2n2l;
-    double idd3n2l;
-    double idd4r2l;
-    double idd4w2l;
-    double idd52l;
-    double idd5pb2l;
-    double idd62l;
-    double idd6ds2l;
-    double idd2p2l;
-    double idd3p2l;
+    
+    double vdd2c;
+    double idd02c;
+    double idd2n2c;
+    double idd3n2c;
+    double idd4r2c;
+    double idd4w2c;
+    double idd52c;
+    double idd5pdb2c;
+    double idd62c;
+    double idd6ds2c;
+    double idd2p2c;
+    double idd3p2c;
+    
+    double vdd2d;
+    double idd02d;
+    double idd2n2d;
+    double idd3n2d;
+    double idd4r2d;
+    double idd4w2d;
+    double idd52d;
+    double idd5pdb2d;
+    double idd62d;
+    double idd6ds2d;
+    double idd2p2d;
+    double idd3p2d;
 
     double vddq;
 
     std::optional<double> iBeta_vdd1;
-    std::optional<double> iBeta_vdd2h;
-    std::optional<double> iBeta_vdd2l;
+    std::optional<double> iBeta_vdd2c;
+    std::optional<double> iBeta_vdd2d;
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR6,
                             vdd1,
@@ -302,39 +302,39 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemPowerSpecTypeLPDDR6,
                             idd4r1,
                             idd4w1,
                             idd51,
-                            idd5pb1,
+                            idd5pdb1,
                             idd61,
                             idd6ds1,
                             idd2p1,
                             idd3p1,
-                            vdd2h,
-                            idd02h,
-                            idd2n2h,
-                            idd3n2h,
-                            idd4r2h,
-                            idd4w2h,
-                            idd52h,
-                            idd5pb2h,
-                            idd62h,
-                            idd6ds2h,
-                            idd2p2h,
-                            idd3p2h,
-                            vdd2l,
-                            idd02l,
-                            idd2n2l,
-                            idd3n2l,
-                            idd4r2l,
-                            idd4w2l,
-                            idd52l,
-                            idd5pb2l,
-                            idd62l,
-                            idd6ds2l,
-                            idd2p2l,
-                            idd3p2l,
+                            vdd2c,
+                            idd02c,
+                            idd2n2c,
+                            idd3n2c,
+                            idd4r2c,
+                            idd4w2c,
+                            idd52c,
+                            idd5pdb2c,
+                            idd62c,
+                            idd6ds2c,
+                            idd2p2c,
+                            idd3p2c,
+                            vdd2d,
+                            idd02d,
+                            idd2n2d,
+                            idd3n2d,
+                            idd4r2d,
+                            idd4w2d,
+                            idd52d,
+                            idd5pdb2d,
+                            idd62d,
+                            idd6ds2d,
+                            idd2p2d,
+                            idd3p2d,
                             vddq,
                             iBeta_vdd1,
-                            iBeta_vdd2h,
-                            iBeta_vdd2l)
+                            iBeta_vdd2c,
+                            iBeta_vdd2d)
 
 struct MemSpecLPDDR6
 {
