@@ -189,10 +189,6 @@ struct MemTimingSpecTypeLPDDR6
     uint64_t ESPD;
     uint64_t SR;
     uint64_t XSR;
-    // TODO: just temporarily for compatibility reasons; will get removed later
-    uint64_t RCD_L;
-    uint64_t RCD_S;
-    uint64_t RFCpb;
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             tCK,
