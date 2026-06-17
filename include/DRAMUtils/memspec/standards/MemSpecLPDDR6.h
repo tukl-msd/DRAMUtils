@@ -32,6 +32,7 @@
  * Authors:
  *    Marco Mörz
  *    Thomas Zimmermann
+ *    Lukas Steiner
  */
 
 #ifndef DRAMUTILS_MEMSPEC_STANDARDS_MEMSPECLPDDR6_H
@@ -58,7 +59,6 @@ struct MemArchitectureSpecTypeLPDDR6
     uint64_t burstLength;
     uint64_t dataRate;
     uint64_t width;
-    uint64_t per2BankOffset;
     bool WCKalwaysOn;
     std::optional<uint64_t> maxBurstLength;
 };
@@ -73,7 +73,6 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemArchitectureSpecTypeLPDDR6,
                             burstLength,
                             dataRate,
                             width,
-                            per2BankOffset,
                             WCKalwaysOn,
                             maxBurstLength)
 
@@ -146,7 +145,6 @@ struct MemTimingSpecTypeLPDDR6
 {
     double tCK;
     uint64_t REFI;
-    uint64_t REFIpb;
     uint64_t RFCab;
     uint64_t RFCdb;
     uint64_t RAS;
@@ -174,8 +172,6 @@ struct MemTimingSpecTypeLPDDR6
     uint64_t WTR_S;
     uint64_t WCK2DQO;
     uint64_t WCK2CK;
-    uint64_t pbR2act;
-    uint64_t pbR2pbR;
     uint64_t RTP_24;
     uint64_t RTP_48;
     uint64_t RTW_L_48;
@@ -189,7 +185,6 @@ struct MemTimingSpecTypeLPDDR6
     uint64_t RCD_r;
     uint64_t RCD_w;
     uint64_t CMDPD;
-    uint64_t dbR2dbR;
     uint64_t dbR2act;
     uint64_t ESPD;
     uint64_t SR;
@@ -202,7 +197,6 @@ struct MemTimingSpecTypeLPDDR6
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             tCK,
                             REFI,
-                            REFIpb,
                             RFCab,
                             RAS,
                             RPab,
@@ -229,8 +223,6 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             WTR_S,
                             WCK2DQO,
                             WCK2CK,
-                            pbR2act,
-                            pbR2pbR,
                             RTP_24,
                             RTP_48,
                             RTW_L_48,
@@ -244,8 +236,6 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             RCD_r,
                             RCD_w,
                             CMDPD,
-                            RFCdb,
-                            dbR2dbR,
                             dbR2act,
                             ESPD,
                             SR,
