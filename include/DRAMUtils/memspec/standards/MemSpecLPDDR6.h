@@ -130,6 +130,7 @@ struct MemTimingSpecTypeLPDDR6
 {
     double tCK;
     uint64_t REFI;
+    uint64_t REFIdb;
     uint64_t RFCab;
     uint64_t RFCdb;
     uint64_t RAS;
@@ -170,6 +171,8 @@ struct MemTimingSpecTypeLPDDR6
     uint64_t RCD_r;
     uint64_t RCD_w;
     uint64_t CMDPD;
+    uint64_t dbR2dbR_S;
+    uint64_t dbR2dbR_L;
     uint64_t dbR2act;
     uint64_t ESPD;
     uint64_t SR;
@@ -178,6 +181,7 @@ struct MemTimingSpecTypeLPDDR6
 NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             tCK,
                             REFI,
+                            REFIdb,
                             RFCab,
                             RFCdb,
                             RAS,
@@ -218,6 +222,8 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             RCD_r,
                             RCD_w,
                             CMDPD,
+                            dbR2dbR_S,
+                            dbR2dbR_L,
                             dbR2act,
                             ESPD,
                             SR,
