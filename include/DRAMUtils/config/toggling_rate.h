@@ -10,14 +10,12 @@ enum class TogglingRateIdlePattern
 {
     L = 0,
     H = 1,
-    Z = 2,
     Invalid = -1
 };
 NLOHMANN_JSON_SERIALIZE_ENUM(TogglingRateIdlePattern,
                              {{TogglingRateIdlePattern::Invalid, nullptr},
                               {TogglingRateIdlePattern::L, "L"},
-                              {TogglingRateIdlePattern::H, "H"},
-                              {TogglingRateIdlePattern::Z, "Z"}})
+                              {TogglingRateIdlePattern::H, "H"}})
 
 struct ToggleRateDefinition
 {
