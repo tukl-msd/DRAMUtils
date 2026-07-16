@@ -105,15 +105,6 @@ struct MemImpedanceSpecTypeLPDDR6
     bool wck_termination;
     double wck_R_eq;
     double wck_dyn_E;
-
-    // DBI read
-    bool rdbi_termination;
-    double rdbi_R_eq;
-    double rdbi_dyn_E;
-    // DBI write
-    bool wdbi_termination;
-    double wdbi_R_eq;
-    double wdbi_dyn_E;
 };
 NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR6,
                             ck_termination,
@@ -133,13 +124,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemImpedanceSpecTypeLPDDR6,
                             rdqs_dyn_E,
                             wck_termination,
                             wck_R_eq,
-                            wck_dyn_E,
-                            rdbi_termination,
-                            rdbi_R_eq,
-                            rdbi_dyn_E,
-                            wdbi_termination,
-                            wdbi_R_eq,
-                            wdbi_dyn_E)
+                            wck_dyn_E)
 
 struct MemTimingSpecTypeLPDDR6
 {
