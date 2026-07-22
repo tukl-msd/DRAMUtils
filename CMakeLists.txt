@@ -40,7 +40,7 @@ cmake_minimum_required(VERSION 3.22.0)
 
 set(PROJECT_NAME "DRAMUtils")
 
-project(${PROJECT_NAME} VERSION 1.13.4)
+project(${PROJECT_NAME} VERSION 1.13.6)
 
 if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
