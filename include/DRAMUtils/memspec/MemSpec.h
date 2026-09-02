@@ -31,6 +31,7 @@
  *
  * Authors:
  *    Marco Mörz
+ *    Thomas Zimmermann
  */
 
 #ifndef DRAMUTILS_MEMSPEC_MEMSPEC_H
@@ -81,7 +82,8 @@ using VariantTypes = util::type_sequence<MemSpecDDR3,
                                          MemSpecHBM2,
                                          MemSpecHBM3,
                                          MemSpecHBM4,
-                                         MemSpecSTTMRAM>;
+                                         MemSpecSTTMRAM,
+                                         MemSpecDDR5MRDimm>;
 
 DRAMUTILS_DECLARE_IDVARIANT(MemSpecVariant, "memoryType", VariantTypes)
 
