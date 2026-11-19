@@ -153,6 +153,7 @@ struct MemTimingSpecTypeLPDDR5
     uint64_t RPpb;
     uint64_t RCpb;
     uint64_t RCab;
+    uint64_t AAD;
     uint64_t PPD;
     uint64_t RCD_L;
     uint64_t RCD_S;
@@ -193,6 +194,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR5,
                             RPpb,
                             RCpb,
                             RCab,
+                            AAD,
                             PPD,
                             RCD_L,
                             RCD_S,
