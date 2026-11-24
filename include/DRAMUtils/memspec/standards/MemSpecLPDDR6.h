@@ -138,6 +138,7 @@ struct MemTimingSpecTypeLPDDR6
     uint64_t RPpb;
     uint64_t RCpb;
     uint64_t RCab;
+    uint64_t AAD;
     uint64_t PPD;
     uint64_t FAW;
     uint64_t RRD;
@@ -189,6 +190,7 @@ NLOHMANN_JSONIFY_ALL_THINGS(MemTimingSpecTypeLPDDR6,
                             RPpb,
                             RCpb,
                             RCab,
+                            AAD,
                             PPD,
                             FAW,
                             RRD,
